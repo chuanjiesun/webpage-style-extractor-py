@@ -1,0 +1,1078 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bambu Lab 拓竹科技 - 设计风格验证页面</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --color-primary: #00AE42;
+      --color-primary-hover: #008733;
+      --color-primary-active: #007B55;
+      --color-dark: #1A1A1A;
+      --color-text-primary: #333333;
+      --color-text-secondary: #9E9E9E;
+      --color-bg-light: #F5F5F5;
+      --color-bg-white: #FFFFFF;
+      --color-accent-gold: #C6A169;
+      --color-accent-orange: #FF6600;
+      --color-accent-purple: #664beb;
+      --color-accent-purple-light: #938AFF;
+      --spacing-xs: 4px;
+      --spacing-sm: 8px;
+      --spacing-md: 16px;
+      --spacing-lg: 24px;
+      --spacing-xl: 32px;
+      --spacing-2xl: 48px;
+      --radius-sm: 3px;
+      --radius-md: 4px;
+      --navbar-height: 56px;
+      --font-family: Manrope, "Open Sans", "system-ui", "Segoe UI", Roboto, Oxygen, Ubuntu, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+      --transition-base: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      --shadow-btn-hover: 0 2px 4px -1px rgba(145,158,171,0.2), 0 4px 5px 0 rgba(145,158,171,0.14), 0 1px 10px 0 rgba(145,158,171,0.12);
+      --shadow-btn-active: 0 5px 5px -3px rgba(145,158,171,0.2), 0 8px 10px 1px rgba(145,158,171,0.14), 0 3px 14px 2px rgba(145,158,171,0.12);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: var(--font-family);
+      color: var(--color-text-primary);
+      background: var(--color-bg-white);
+      line-height: 1.5;
+    }
+
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: var(--navbar-height);
+      background: #FFFFFF;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      z-index: 1000;
+      border-bottom: 1px solid #EEEEEE;
+    }
+
+    .navbar-logo {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--color-dark);
+      text-decoration: none;
+    }
+
+    .navbar-logo span {
+      color: var(--color-primary);
+    }
+
+    .navbar-nav {
+      display: flex;
+      gap: 24px;
+      align-items: center;
+      list-style: none;
+    }
+
+    .navbar-nav a {
+      color: var(--color-text-primary);
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: 400;
+      padding: 8px 12px;
+      border-radius: var(--radius-sm);
+      transition: background-color var(--transition-base);
+    }
+
+    .navbar-nav a:hover {
+      background: rgba(51, 51, 51, 0.08);
+    }
+
+    .navbar-cta {
+      background: var(--color-primary) !important;
+      color: var(--color-bg-white) !important;
+      border-radius: var(--radius-sm);
+      padding: 4px 12px !important;
+    }
+
+    .navbar-cta:hover {
+      background: var(--color-primary-hover) !important;
+    }
+
+    .hero {
+      margin-top: var(--navbar-height);
+      background: var(--color-dark);
+      color: #FFFFFF;
+      padding: 80px 24px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(0deg, rgb(0, 0, 0) 0%, rgba(0, 0, 0, 0) 100%);
+      z-index: 1;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .hero h1 {
+      font-size: 48px;
+      font-weight: 700;
+      line-height: 48.48px;
+      margin-bottom: 16px;
+    }
+
+    .hero p {
+      font-size: 18px;
+      line-height: 24px;
+      color: #F5F5F5;
+      margin-bottom: 32px;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+    }
+
+    .section {
+      padding: 60px 24px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .section-title {
+      font-size: 30px;
+      font-weight: 700;
+      line-height: 36px;
+      margin-bottom: 40px;
+      text-align: center;
+    }
+
+    .btn-primary-dark {
+      background: var(--color-dark);
+      color: #F5F5F5;
+      border: none;
+      border-radius: var(--radius-md);
+      padding: 6px 16px;
+      font-size: 16px;
+      font-weight: 400;
+      font-family: var(--font-family);
+      cursor: pointer;
+      transition: background-color var(--transition-base), box-shadow var(--transition-base);
+    }
+
+    .btn-primary-dark:hover {
+      box-shadow: var(--shadow-btn-hover);
+    }
+
+    .btn-primary-dark:active {
+      box-shadow: var(--shadow-btn-active);
+    }
+
+    .btn-secondary-transparent {
+      background: transparent;
+      color: #F5F5F5;
+      border: none;
+      border-radius: var(--radius-md);
+      padding: 6px 16px;
+      font-size: 16px;
+      font-weight: 400;
+      font-family: var(--font-family);
+      cursor: pointer;
+      transition: background-color var(--transition-base);
+    }
+
+    .btn-secondary-transparent:hover {
+      background: rgba(51, 51, 51, 0.08);
+    }
+
+    .btn-secondary-light {
+      background: var(--color-bg-light);
+      color: var(--color-text-primary);
+      border: none;
+      border-radius: var(--radius-md);
+      padding: 6px 16px;
+      font-size: 16px;
+      font-weight: 400;
+      font-family: var(--font-family);
+      cursor: pointer;
+    }
+
+    .btn-cta-green {
+      background: var(--color-primary);
+      color: var(--color-bg-white);
+      border: none;
+      border-radius: var(--radius-sm);
+      padding: 4px 12px;
+      font-size: 16px;
+      font-weight: 400;
+      font-family: var(--font-family);
+      cursor: pointer;
+      transition: background-color var(--transition-base), box-shadow var(--transition-base);
+    }
+
+    .btn-cta-green:hover {
+      background: var(--color-primary-hover);
+    }
+
+    .btn-cta-green:active {
+      box-shadow: var(--shadow-btn-active);
+    }
+
+    .btn-subscribe {
+      background: var(--color-primary);
+      color: var(--color-bg-white);
+      border: none;
+      border-radius: 0px var(--radius-sm) var(--radius-sm) 0px;
+      padding: 6px 16px;
+      font-size: 16px;
+      font-weight: 400;
+      font-family: var(--font-family);
+      cursor: pointer;
+    }
+
+    .btn-subscribe:hover {
+      background: var(--color-primary-active);
+      box-shadow: var(--shadow-btn-hover);
+    }
+
+    .color-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 16px;
+    }
+
+    .color-card {
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .color-swatch {
+      height: 80px;
+      display: flex;
+      align-items: flex-end;
+      padding: 8px;
+    }
+
+    .color-swatch span {
+      font-size: 12px;
+      color: #FFFFFF;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+    }
+
+    .color-info {
+      padding: 8px;
+      background: #FFFFFF;
+    }
+
+    .color-info .name {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--color-dark);
+      margin-bottom: 2px;
+    }
+
+    .color-info .value {
+      font-size: 12px;
+      color: var(--color-text-secondary);
+    }
+
+    .gradient-demo {
+      height: 80px;
+      background: linear-gradient(0deg, rgb(0, 0, 0) 0%, rgba(0, 0, 0, 0) 100%);
+      border-radius: 8px;
+      margin-top: 16px;
+    }
+
+    .typography-showcase {
+      background: #FFFFFF;
+      border-radius: 8px;
+      padding: 32px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .typo-row {
+      display: flex;
+      align-items: baseline;
+      padding: 12px 0;
+      border-bottom: 1px solid #EEEEEE;
+    }
+
+    .typo-row:last-child {
+      border-bottom: none;
+    }
+
+    .typo-label {
+      width: 120px;
+      flex-shrink: 0;
+      font-size: 12px;
+      color: var(--color-text-secondary);
+    }
+
+    .typo-sample {
+      flex: 1;
+    }
+
+    .typo-meta {
+      width: 200px;
+      text-align: right;
+      font-size: 12px;
+      color: var(--color-text-secondary);
+    }
+
+    .component-section {
+      margin-bottom: 48px;
+    }
+
+    .component-section h3 {
+      font-size: 22px;
+      font-weight: 600;
+      line-height: 36px;
+      margin-bottom: 24px;
+    }
+
+    .btn-demo-row {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+
+    .btn-demo-label {
+      font-size: 13px;
+      color: var(--color-text-secondary);
+      min-width: 140px;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: 384px 384px 384px;
+      gap: 16px;
+    }
+
+    .product-card {
+      position: relative;
+      border-radius: 8px;
+      overflow: hidden;
+      background: #E0E0E0;
+      height: 320px;
+      display: flex;
+      align-items: flex-end;
+    }
+
+    .product-card .overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 24px;
+      background: linear-gradient(0deg, rgb(0, 0, 0) 0%, rgba(0, 0, 0, 0) 100%);
+      z-index: 1;
+    }
+
+    .product-card .badge {
+      font-size: 12px;
+      font-weight: 400;
+      line-height: 17px;
+      margin-bottom: 8px;
+    }
+
+    .product-card .badge-green { color: #00AE42; }
+    .product-card .badge-gold { color: #C6A169; }
+    .product-card .badge-orange { color: #FF6600; }
+
+    .product-card h4 {
+      color: #FFFFFF;
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 22.4px;
+      margin-bottom: 8px;
+    }
+
+    .product-card .card-btns {
+      display: flex;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .spacing-demo {
+      background: #FFFFFF;
+      border-radius: 8px;
+      padding: 32px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .spacing-row {
+      display: flex;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .spacing-label {
+      width: 160px;
+      font-size: 13px;
+      color: var(--color-text-secondary);
+    }
+
+    .spacing-value {
+      width: 80px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .spacing-bar {
+      height: 16px;
+      background: var(--color-primary);
+      border-radius: 2px;
+      opacity: 0.6;
+    }
+
+    .grid-demo {
+      background: #FFFFFF;
+      border-radius: 8px;
+      padding: 32px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .grid-columns {
+      display: grid;
+      grid-template-columns: 384px 384px 384px;
+      gap: 16px;
+    }
+
+    .grid-col {
+      background: var(--color-primary);
+      opacity: 0.15;
+      height: 60px;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      color: #333;
+    }
+
+    .industry-section {
+      background: var(--color-dark);
+      color: #FFFFFF;
+      padding: 60px 24px;
+      margin-top: 48px;
+    }
+
+    .industry-content {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .industry-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 24px;
+      margin-top: 32px;
+    }
+
+    .industry-card {
+      background: rgba(255,255,255,0.08);
+      border-radius: 8px;
+      padding: 24px;
+    }
+
+    .industry-card h4 {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: var(--color-primary);
+    }
+
+    .industry-card p {
+      font-size: 14px;
+      line-height: 20px;
+      color: #F5F5F5;
+    }
+
+    .footer {
+      background: #111111;
+      color: #9E9E9E;
+      padding: 48px 24px;
+      text-align: center;
+    }
+
+    .footer p {
+      font-size: 14px;
+    }
+
+    .footer a {
+      color: var(--color-primary);
+      text-decoration: none;
+    }
+
+    .subscribe-demo {
+      display: flex;
+      max-width: 400px;
+      margin-top: 16px;
+    }
+
+    .subscribe-input {
+      flex: 1;
+      background: var(--color-bg-light);
+      border: none;
+      padding: 6px 16px;
+      font-size: 16px;
+      font-family: var(--font-family);
+      color: var(--color-text-primary);
+      outline: none;
+    }
+
+    .css-vars-section {
+      background: #1A1A1A;
+      color: #F5F5F5;
+      padding: 60px 24px;
+    }
+
+    .css-vars-content {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .css-vars-content h2 {
+      color: #FFFFFF;
+    }
+
+    pre {
+      background: #111111;
+      border-radius: 8px;
+      padding: 24px;
+      overflow-x: auto;
+      font-size: 14px;
+      line-height: 1.6;
+      color: #F5F5F5;
+      margin-top: 24px;
+    }
+
+    .token-color { color: #00AE42; }
+    .token-prop { color: #938AFF; }
+    .token-value { color: #C6A169; }
+    .token-comment { color: #666666; }
+
+    .input-demo {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .label-tag {
+      display: inline-block;
+      font-size: 12px;
+      line-height: 17px;
+      padding: 2px 8px;
+      border-radius: 3px;
+      margin-right: 8px;
+    }
+
+    .label-green { background: rgba(0,174,66,0.15); color: #00AE42; }
+    .label-gold { background: rgba(198,161,105,0.15); color: #C6A169; }
+    .label-orange { background: rgba(255,102,0,0.15); color: #FF6600; }
+    .label-purple { background: rgba(102,75,235,0.15); color: #664beb; }
+
+    .nav-demo {
+      background: #FFFFFF;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .nav-demo-left {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .nav-demo-logo {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--color-dark);
+    }
+
+    .nav-demo-links {
+      display: flex;
+      gap: 8px;
+    }
+
+    .nav-demo-links a {
+      color: var(--color-text-primary);
+      text-decoration: none;
+      font-size: 16px;
+      padding: 6px 12px;
+      border-radius: var(--radius-sm);
+      transition: background-color var(--transition-base);
+    }
+
+    .nav-demo-links a:hover {
+      background: rgba(51, 51, 51, 0.08);
+    }
+
+    .nav-demo-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+  </style>
+</head>
+<body>
+
+<nav class="navbar">
+  <a href="#" class="navbar-logo">Bambu <span>Lab</span></a>
+  <ul class="navbar-nav">
+    <li><a href="#colors">色彩</a></li>
+    <li><a href="#typography">排版</a></li>
+    <li><a href="#components">组件</a></li>
+    <li><a href="#layout">布局</a></li>
+    <li><a href="#industry">行业特色</a></li>
+    <li><a href="#" class="navbar-cta">商城</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-content">
+    <h1>Bambu Lab 拓竹科技</h1>
+    <p>设计风格验证页面 - 品牌绿 #00AE42 + 深黑 #1A1A1A + Manrope 字体</p>
+    <div class="hero-buttons">
+      <button class="btn-primary-dark">立即购买</button>
+      <button class="btn-secondary-transparent">了解更多</button>
+    </div>
+  </div>
+</section>
+
+<section id="colors" class="section">
+  <h2 class="section-title">色彩系统</h2>
+
+  <h3 style="font-size:22px;font-weight:600;margin-bottom:16px;">品牌主色</h3>
+  <div class="color-grid" style="margin-bottom:32px;">
+    <div class="color-card">
+      <div class="color-swatch" style="background:#00AE42;"><span>#00AE42</span></div>
+      <div class="color-info"><div class="name">品牌绿 / Primary</div><div class="value">rgb(0, 174, 66) - CTA、新品标签、链接</div></div>
+    </div>
+    <div class="color-card">
+      <div class="color-swatch" style="background:#008733;"><span>#008733</span></div>
+      <div class="color-info"><div class="name">品牌绿悬停</div><div class="value">rgb(0, 135, 51) - 悬停态</div></div>
+    </div>
+    <div class="color-card">
+      <div class="color-swatch" style="background:#007B55;"><span>#007B55</span></div>
+      <div class="color-info"><div class="name">品牌绿激活</div><div class="value">rgb(0, 123, 85) - 按下态</div></div>
+    </div>
+  </div>
+
+  <h3 style="font-size:22px;font-weight:600;margin-bottom:16px;">中性色</h3>
+  <div class="color-grid" style="margin-bottom:32px;">
+    <div class="color-card">
+      <div class="color-swatch" style="background:#1A1A1A;"><span>#1A1A1A</span></div>
+      <div class="color-info"><div class="name">深黑 / Dark</div><div class="value">主按钮、深色区块</div></div>
+    </div>
+    <div class="color-card">
+      <div class="color-swatch" style="background:#333333;border:1px solid #ddd;"><span style="color:#fff;">#333333</span></div>
+      <div class="color-info"><div class="name">深灰 / Text Primary</div><div class="value">导航、正文</div></div>
+    </div>
+    <div class="color-card">
+      <div class="color-swatch" style="background:#9E9E9E;"><span>#9E9E9E</span></div>
+      <div class="color-info"><div class="name">中灰 / Text Secondary</div><div class="value">辅助说明</div></div>
+    </div>
+    <div class="color-card">
+      <div class="color-swatch" style="background:#F5F5F5;border:1px solid #ddd;"><span style="color:#333;">#F5F5F5</span></div>
+      <div class="color-info"><div class="name">浅灰 / BG Light</div><div class="value">按钮背景</div></div>
+    </div>
+    <div class="color-card">
+      <div class="color-swatch" style="background:#FFFFFF;border:1px solid #ddd;"><span style="color:#333;">#FFFFFF</span></div>
+      <div class="color-info"><div class="name">白色 / White</div><div class="value">页面背景、白色文字</div></div>
+    </div>
+  </div>
+
+  <h3 style="font-size:22px;font-weight:600;margin-bottom:16px;">强调色</h3>
+  <div class="color-grid" style="margin-bottom:32px;">
+    <div class="color-card">
+      <div class="color-swatch" style="background:#C6A169;"><span>#C6A169</span></div>
+      <div class="color-info"><div class="name">香槟金</div><div class="value">高端产品新品标签</div></div>
+    </div>
+    <div class="color-card">
+      <div class="color-swatch" style="background:#FF6600;"><span>#FF6600</span></div>
+      <div class="color-info"><div class="name">活力橙</div><div class="value">特定产品新品标签</div></div>
+    </div>
+    <div class="color-card">
+      <div class="color-swatch" style="background:#664beb;"><span>#664beb</span></div>
+      <div class="color-info"><div class="name">科技紫 / X2D</div><div class="value">X2D产品强调色</div></div>
+    </div>
+    <div class="color-card">
+      <div class="color-swatch" style="background:#938AFF;"><span>#938AFF</span></div>
+      <div class="color-info"><div class="name">浅紫 / X2D Dark</div><div class="value">X2D产品次级色</div></div>
+    </div>
+  </div>
+
+  <h3 style="font-size:22px;font-weight:600;margin-bottom:16px;">渐变色</h3>
+  <p style="font-size:14px;color:var(--color-text-secondary);margin-bottom:8px;">图片叠加渐变 - linear-gradient(0deg, rgb(0,0,0) 0%, rgba(0,0,0,0) 100%)</p>
+  <div class="gradient-demo"></div>
+</section>
+
+<section id="typography" class="section" style="background:#F8F9FA;">
+  <h2 class="section-title">排版系统</h2>
+
+  <div class="typography-showcase">
+    <div class="typo-row">
+      <div class="typo-label">H2 (大)</div>
+      <div class="typo-sample" style="font-size:48px;font-weight:700;line-height:48.48px;">拓竹 X2D</div>
+      <div class="typo-meta">48px / 700 / 48.48px</div>
+    </div>
+    <div class="typo-row">
+      <div class="typo-label">H2 (中)</div>
+      <div class="typo-sample" style="font-size:30px;font-weight:700;line-height:36px;">创客的生产力工具</div>
+      <div class="typo-meta">30px / 700 / 36px</div>
+    </div>
+    <div class="typo-row">
+      <div class="typo-label">H1</div>
+      <div class="typo-sample" style="font-size:32px;font-weight:700;line-height:41.6px;">Bambu Lab</div>
+      <div class="typo-meta">32px / 700 / 41.6px</div>
+    </div>
+    <div class="typo-row">
+      <div class="typo-label">H2 (小)</div>
+      <div class="typo-sample" style="font-size:22px;font-weight:600;line-height:36px;">高质量3D打印耗材</div>
+      <div class="typo-meta">22px / 600 / 36px</div>
+    </div>
+    <div class="typo-row">
+      <div class="typo-label">Body-1</div>
+      <div class="typo-sample" style="font-size:18px;font-weight:400;line-height:24px;">Bambu Lab 致力于让3D打印技术走进千家万户</div>
+      <div class="typo-meta">18px / 400 / 24px</div>
+    </div>
+    <div class="typo-row">
+      <div class="typo-label">Body-2 / Button</div>
+      <div class="typo-sample" style="font-size:16px;font-weight:400;line-height:21px;">立即购买 / 了解更多</div>
+      <div class="typo-meta">16px / 400 / 21px</div>
+    </div>
+    <div class="typo-row">
+      <div class="typo-label">Description</div>
+      <div class="typo-sample" style="font-size:12px;font-weight:400;line-height:17px;color:#9E9E9E;">新品 / 3D 打印机 / 耗材</div>
+      <div class="typo-meta">12px / 400 / 17px</div>
+    </div>
+  </div>
+</section>
+
+<section id="components" class="section">
+  <h2 class="section-title">组件样式</h2>
+
+  <div class="component-section">
+    <h3>按钮组件</h3>
+
+    <div style="background:#1A1A1A;padding:24px;border-radius:8px;margin-bottom:24px;">
+      <p style="color:#F5F5F5;font-size:13px;margin-bottom:16px;">深色背景按钮</p>
+      <div class="btn-demo-row">
+        <span class="btn-demo-label" style="color:#9E9E9E;">主按钮（购买）</span>
+        <button class="btn-primary-dark">立即购买</button>
+      </div>
+      <div class="btn-demo-row">
+        <span class="btn-demo-label" style="color:#9E9E9E;">次要按钮（了解）</span>
+        <button class="btn-secondary-transparent">了解更多</button>
+      </div>
+    </div>
+
+    <div style="background:#FFFFFF;padding:24px;border-radius:8px;border:1px solid #EEE;margin-bottom:24px;">
+      <p style="color:#333;font-size:13px;margin-bottom:16px;">浅色背景按钮</p>
+      <div class="btn-demo-row">
+        <span class="btn-demo-label">主按钮（购买）</span>
+        <button class="btn-secondary-light">立即购买</button>
+      </div>
+      <div class="btn-demo-row">
+        <span class="btn-demo-label">CTA（商城）</span>
+        <button class="btn-cta-green">商城</button>
+      </div>
+    </div>
+
+    <div style="background:#FFFFFF;padding:24px;border-radius:8px;border:1px solid #EEE;">
+      <p style="color:#333;font-size:13px;margin-bottom:16px;">订阅按钮</p>
+      <div class="subscribe-demo">
+        <input type="text" class="subscribe-input" placeholder="输入邮箱地址">
+        <button class="btn-subscribe">订阅我们</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="component-section">
+    <h3>标签组件</h3>
+    <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;">
+      <span class="label-tag label-green">新品</span>
+      <span class="label-tag label-gold">新品</span>
+      <span class="label-tag label-orange">新品</span>
+      <span class="label-tag label-purple">X2D</span>
+    </div>
+  </div>
+
+  <div class="component-section">
+    <h3>产品卡片</h3>
+    <div class="card-grid">
+      <div class="product-card" style="background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);">
+        <div class="overlay">
+          <div class="badge badge-green">新品</div>
+          <h4>拓竹 X2D</h4>
+          <div class="card-btns">
+            <button class="btn-primary-dark" style="font-size:14px;padding:4px 12px;">立即购买</button>
+            <button class="btn-secondary-transparent" style="font-size:14px;padding:4px 12px;">了解更多</button>
+          </div>
+        </div>
+      </div>
+      <div class="product-card" style="background: linear-gradient(135deg, #3a3a3a 0%, #2a2a2a 100%);">
+        <div class="overlay">
+          <div class="badge badge-gold">新品</div>
+          <h4>拓竹 P2S</h4>
+          <div class="card-btns">
+            <button class="btn-secondary-light" style="font-size:14px;padding:4px 12px;">立即购买</button>
+            <button class="btn-secondary-transparent" style="font-size:14px;padding:4px 12px;">了解更多</button>
+          </div>
+        </div>
+      </div>
+      <div class="product-card" style="background: linear-gradient(135deg, #4a3a5a 0%, #2a1a3a 100%);">
+        <div class="overlay">
+          <div class="badge badge-orange">新品</div>
+          <h4>Bambu Lab A1</h4>
+          <div class="card-btns">
+            <button class="btn-primary-dark" style="font-size:14px;padding:4px 12px;">立即购买</button>
+            <button class="btn-secondary-transparent" style="font-size:14px;padding:4px 12px;">了解更多</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="component-section">
+    <h3>导航栏</h3>
+    <div class="nav-demo">
+      <div class="nav-demo-left">
+        <span class="nav-demo-logo">Bambu <span style="color:#00AE42;">Lab</span></span>
+        <div class="nav-demo-links">
+          <a href="#">产品</a>
+          <a href="#">耗材</a>
+          <a href="#">配件</a>
+          <a href="#">软件</a>
+          <a href="#">MakerWorld</a>
+        </div>
+      </div>
+      <div class="nav-demo-right">
+        <a href="#" style="color:#9E9E9E;font-size:12px;text-decoration:none;">全球简体中文</a>
+        <button class="btn-cta-green">商城</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="component-section">
+    <h3>表单组件</h3>
+    <div class="input-demo">
+      <input type="text" class="subscribe-input" style="border-radius:4px;" placeholder="搜索产品...">
+      <label style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer;">
+        <input type="checkbox" style="width:16px;height:16px;">
+        订阅新品通知
+      </label>
+    </div>
+  </div>
+</section>
+
+<section id="layout" class="section" style="background:#F8F9FA;">
+  <h2 class="section-title">布局与间距</h2>
+
+  <div class="grid-demo" style="margin-bottom:32px;">
+    <h3 style="font-size:18px;font-weight:600;margin-bottom:16px;">产品展示网格：3列 × 384px + 16px 间距</h3>
+    <div class="grid-columns">
+      <div class="grid-col">384px</div>
+      <div class="grid-col">384px</div>
+      <div class="grid-col">384px</div>
+    </div>
+  </div>
+
+  <div class="spacing-demo" style="margin-bottom:32px;">
+    <h3 style="font-size:18px;font-weight:600;margin-bottom:24px;">Section 间距系统</h3>
+    <div class="spacing-row">
+      <div class="spacing-label">Section-Gap-1</div>
+      <div class="spacing-value">60px</div>
+      <div class="spacing-bar" style="width:60px;"></div>
+    </div>
+    <div class="spacing-row">
+      <div class="spacing-label">Section-Gap-2</div>
+      <div class="spacing-value">80px</div>
+      <div class="spacing-bar" style="width:80px;"></div>
+    </div>
+    <div class="spacing-row">
+      <div class="spacing-label">Section-Gap-3</div>
+      <div class="spacing-value">100px</div>
+      <div class="spacing-bar" style="width:100px;"></div>
+    </div>
+    <div class="spacing-row">
+      <div class="spacing-label">Section-Gap-4</div>
+      <div class="spacing-value">140px</div>
+      <div class="spacing-bar" style="width:140px;"></div>
+    </div>
+    <div class="spacing-row">
+      <div class="spacing-label">Section-Gap-5</div>
+      <div class="spacing-value">160px</div>
+      <div class="spacing-bar" style="width:160px;"></div>
+    </div>
+    <div class="spacing-row">
+      <div class="spacing-label">Section-Gap-6</div>
+      <div class="spacing-value">200px</div>
+      <div class="spacing-bar" style="width:200px;"></div>
+    </div>
+    <div class="spacing-row">
+      <div class="spacing-label">Section-Gap-7</div>
+      <div class="spacing-value">240px</div>
+      <div class="spacing-bar" style="width:240px;"></div>
+    </div>
+    <div class="spacing-row">
+      <div class="spacing-label">Section-Gap-8</div>
+      <div class="spacing-value">320px</div>
+      <div class="spacing-bar" style="width:320px;"></div>
+    </div>
+  </div>
+
+  <div class="spacing-demo">
+    <h3 style="font-size:18px;font-weight:600;margin-bottom:24px;">Content 间距系统</h3>
+    <div class="spacing-row">
+      <div class="spacing-label">Content-Gap-1</div>
+      <div class="spacing-value">4px</div>
+      <div class="spacing-bar" style="width:16px;"></div>
+    </div>
+    <div class="spacing-row">
+      <div class="spacing-label">Content-Gap-2</div>
+      <div class="spacing-value">8px</div>
+      <div class="spacing-bar" style="width:32px;"></div>
+    </div>
+    <div class="spacing-row">
+      <div class="spacing-label">Content-Gap-3</div>
+      <div class="spacing-value">12px</div>
+      <div class="spacing-bar" style="width:48px;"></div>
+    </div>
+    <div class="spacing-row">
+      <div class="spacing-label">Content-Gap-4</div>
+      <div class="spacing-value">16px</div>
+      <div class="spacing-bar" style="width:64px;"></div>
+    </div>
+    <div class="spacing-row">
+      <div class="spacing-label">Content-Gap-6</div>
+      <div class="spacing-value">20px</div>
+      <div class="spacing-bar" style="width:80px;"></div>
+    </div>
+    <div class="spacing-row">
+      <div class="spacing-label">Content-Gap-7</div>
+      <div class="spacing-value">24px</div>
+      <div class="spacing-bar" style="width:96px;"></div>
+    </div>
+    <div class="spacing-row">
+      <div class="spacing-label">Content-Gap-8</div>
+      <div class="spacing-value">32px</div>
+      <div class="spacing-bar" style="width:128px;"></div>
+    </div>
+    <div class="spacing-row">
+      <div class="spacing-label">Content-Gap-9</div>
+      <div class="spacing-value">40px</div>
+      <div class="spacing-bar" style="width:160px;"></div>
+    </div>
+    <div class="spacing-row">
+      <div class="spacing-label">Content-Gap-10</div>
+      <div class="spacing-value">48px</div>
+      <div class="spacing-bar" style="width:192px;"></div>
+    </div>
+  </div>
+</section>
+
+<section id="industry" class="industry-section">
+  <div class="industry-content">
+    <h2 style="font-size:30px;font-weight:700;line-height:36px;text-align:center;">科技/3D打印行业特色</h2>
+    <div class="industry-grid">
+      <div class="industry-card">
+        <h4>沉浸式产品展示</h4>
+        <p>全屏大图产品展示区，每个产品占据完整视口，配合黑色渐变遮罩确保文字可读性</p>
+      </div>
+      <div class="industry-card">
+        <h4>品牌绿视觉锚点</h4>
+        <p>#00AE42 品牌绿仅用于CTA和状态标识，保持克制以维持视觉冲击力</p>
+      </div>
+      <div class="industry-card">
+        <h4>多彩产品线标识</h4>
+        <p>绿色/香槟金/活力橙/科技紫标签区分不同产品系列定位</p>
+      </div>
+      <div class="industry-card">
+        <h4>极简功能主义</h4>
+        <p>3-4px低圆角、无边框卡片、零阴影产品设计，以功能驱动视觉</p>
+      </div>
+      <div class="industry-card">
+        <h4>标准展示结构</h4>
+        <p>产品名称 + 简短描述 + 双按钮（了解更多/立即购买）的统一模式</p>
+      </div>
+      <div class="industry-card">
+        <h4>系统化间距</h4>
+        <p>Section/Content/Button/Gutter 四级间距系统，保证页面节奏一致性</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="css-vars-section">
+  <div class="css-vars-content">
+    <h2 style="font-size:30px;font-weight:700;line-height:36px;text-align:center;margin-bottom:8px;">CSS 变量参考</h2>
+    <pre><code><span class="token-comment">/* 品牌色 */</span>
+<span class="token-prop">--color-primary</span>: <span class="token-value">#00AE42</span>;
+<span class="token-prop">--color-primary-hover</span>: <span class="token-value">#008733</span>;
+<span class="token-prop">--color-primary-active</span>: <span class="token-value">#007B55</span>;
+<span class="token-prop">--color-dark</span>: <span class="token-value">#1A1A1A</span>;
+<span class="token-prop">--color-text-primary</span>: <span class="token-value">#333333</span>;
+<span class="token-prop">--color-text-secondary</span>: <span class="token-value">#9E9E9E</span>;
+<span class="token-prop">--color-bg-light</span>: <span class="token-value">#F5F5F5</span>;
+<span class="token-prop">--color-accent-gold</span>: <span class="token-value">#C6A169</span>;
+<span class="token-prop">--color-accent-orange</span>: <span class="token-value">#FF6600</span>;
+<span class="token-prop">--color-accent-purple</span>: <span class="token-value">#664beb</span>;
+
+<span class="token-comment">/* 间距 */</span>
+<span class="token-prop">--spacing-section-2</span>: <span class="token-value">80px</span>;
+<span class="token-prop">--spacing-section-4</span>: <span class="token-value">140px</span>;
+<span class="token-prop">--spacing-xs</span>: <span class="token-value">4px</span>;
+<span class="token-prop">--spacing-md</span>: <span class="token-value">16px</span>;
+<span class="token-prop">--spacing-lg</span>: <span class="token-value">24px</span>;
+<span class="token-prop">--spacing-xl</span>: <span class="token-value">32px</span>;
+
+<span class="token-comment">/* 圆角 */</span>
+<span class="token-prop">--radius-sm</span>: <span class="token-value">3px</span>;
+<span class="token-prop">--radius-md</span>: <span class="token-value">4px</span>;
+
+<span class="token-comment">/* 字体 */</span>
+<span class="token-prop">--font-family</span>: <span class="token-value">Manrope, "Open Sans", system-ui, sans-serif</span>;
+
+<span class="token-comment">/* 过渡 */</span>
+<span class="token-prop">--transition-base</span>: <span class="token-value">0.25s cubic-bezier(0.4, 0, 0.2, 1)</span>;
+
+<span class="token-comment">/* 阴影 */</span>
+<span class="token-prop">--shadow-btn-hover</span>: <span class="token-value">0 2px 4px -1px rgba(145,158,171,0.2), ...</span>;
+<span class="token-prop">--shadow-btn-active</span>: <span class="token-value">0 5px 5px -3px rgba(145,158,171,0.2), ...</span>;</code></pre>
+  </div>
+</section>
+
+<footer class="footer">
+  <p>Bambu Lab 拓竹科技 - 设计风格验证页面 | 基于 <a href="https://bambulab.com/zh">bambulab.com/zh</a> 页面提取</p>
+  <p style="margin-top:8px;">提取时间：2026-04-16 | 行业：科技（3D打印/制造科技）| 品牌绿：#00AE42</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>阶跃星辰 StepFun - 设计风格验证</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Gilroy:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --content-primary: #2A2424;
+  --content-secondary: rgba(42, 36, 36, 0.7);
+  --content-tertiary: rgba(42, 36, 36, 0.5);
+  --content-disable: rgba(42, 36, 36, 0.35);
+  --content-hover: rgba(42, 36, 36, 0.8);
+  --content-quaterary: #BBBBBB;
+  --content-reverse: #FFFFFF;
+  --bg-paper: #FCFCF9;
+  --bg-gold: #F6F4F1;
+  --bg-shallowgold: #FAF9F5;
+  --bg-hover: rgba(202, 197, 190, 0.1);
+  --bg-hover2: rgba(128, 110, 89, 0.08);
+  --bg-hover-new: #F3F1EE;
+  --border-default: rgba(42, 36, 36, 0.08);
+  --border-hover: rgba(42, 36, 36, 0.16);
+  --border-focus: #E0E0E0;
+  --separator: #EBEBEB;
+  --color-blue: #3986C5;
+  --color-green: #74AD5D;
+  --color-orange: #E5893E;
+  --color-purple: #8361B0;
+  --color-red: #D55959;
+  --color-gold: #806E59;
+  --fill-blue: rgba(57,134,197,0.1);
+  --fill-green: rgba(116,173,93,0.1);
+  --fill-orange: rgba(229,137,62,0.1);
+  --fill-purple: rgba(131,97,176,0.1);
+  --fill-red: rgba(213,89,89,0.1);
+  --fill-gold: rgba(128,110,89,0.1);
+  --radius-sm: 8px;
+  --radius-md: 10px;
+  --radius-full: 9999px;
+  --transition-all: all;
+  --transition-fast: color 0.15s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.15s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: Gilroy, ui-sans-serif, system-ui, -apple-system, sans-serif;
+  color: var(--content-primary);
+  background: var(--bg-paper);
+  line-height: 1.6;
+  font-size: 14px;
+}
+
+/* === Layout === */
+.page-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: 270px;
+  background: var(--bg-paper);
+  border-right: 1px solid var(--separator);
+  padding: 12px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.main-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.topbar {
+  height: 64px;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border-default);
+}
+
+.topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.chat-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 24px;
+}
+
+.input-area {
+  padding: 16px 24px;
+  border-top: 1px solid var(--border-default);
+}
+
+/* === Buttons === */
+.btn-primary {
+  background: var(--content-primary);
+  color: var(--content-reverse);
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 400;
+  cursor: pointer;
+  transition: var(--transition-all);
+  font-family: inherit;
+}
+
+.btn-primary:hover {
+  background: var(--content-hover);
+}
+
+.btn-secondary {
+  background: #FFFFFF;
+  color: var(--content-primary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition-all);
+  font-family: inherit;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn-secondary:hover {
+  border-color: var(--border-hover);
+  box-shadow: 0px 4px 16px 0px rgba(0,0,0,0.10);
+}
+
+.btn-icon {
+  background: transparent;
+  color: var(--content-primary);
+  border: none;
+  border-radius: var(--radius-full);
+  padding: 6px;
+  cursor: pointer;
+  transition: var(--transition-all);
+  font-family: inherit;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+}
+
+.btn-icon:hover {
+  background: var(--bg-hover);
+}
+
+.btn-model {
+  background: transparent;
+  color: var(--content-primary);
+  border: none;
+  border-radius: var(--radius-md);
+  padding: 6px 12px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition-all);
+  font-family: inherit;
+}
+
+.btn-model:hover {
+  background: var(--bg-hover);
+}
+
+/* === Tool Tags === */
+.tool-tags {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.tool-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 16px;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  font-weight: 400;
+  cursor: pointer;
+  transition: var(--transition-all);
+  border: 1px solid var(--border-default);
+  background: transparent;
+  color: var(--content-primary);
+  font-family: inherit;
+}
+
+.tool-tag:hover {
+  border-color: var(--border-hover);
+  box-shadow: 0px 4px 16px 0px rgba(0,0,0,0.10);
+}
+
+.tool-tag .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.tool-tag .new-badge {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--color-blue);
+  margin-left: 2px;
+}
+
+/* === Chat Input === */
+.chat-input-wrap {
+  background: #FFFFFF;
+  border: 1px solid var(--border-default);
+  border-radius: 16px;
+  padding: 12px 16px;
+  max-width: 720px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.chat-input-area {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.chat-input-area textarea {
+  flex: 1;
+  border: none;
+  outline: none;
+  resize: none;
+  font-family: inherit;
+  font-size: 14px;
+  color: var(--content-primary);
+  background: transparent;
+  line-height: 1.5;
+  min-height: 24px;
+  max-height: 120px;
+}
+
+.chat-input-area textarea::placeholder {
+  color: var(--content-quaterary);
+}
+
+/* === Sidebar Items === */
+.sidebar-section {
+  padding: 8px 0;
+}
+
+.sidebar-section-title {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--content-tertiary);
+  padding: 4px 12px;
+  margin-bottom: 4px;
+}
+
+.sidebar-item {
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  color: var(--content-secondary);
+  cursor: pointer;
+  transition: var(--transition-all);
+  transition-property: background-color;
+  transition-duration: 0.15s;
+}
+
+.sidebar-item:hover {
+  background: var(--bg-hover);
+}
+
+.sidebar-item.active {
+  background: var(--bg-hover-new);
+  color: var(--content-primary);
+  font-weight: 500;
+}
+
+/* === Color System === */
+.color-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.color-card {
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--border-default);
+  transition: var(--transition-all);
+}
+
+.color-card:hover {
+  border-color: var(--border-hover);
+}
+
+.color-swatch {
+  height: 72px;
+  display: flex;
+  align-items: flex-end;
+  padding: 8px 10px;
+}
+
+.color-swatch span {
+  font-size: 10px;
+  font-weight: 500;
+  padding: 2px 5px;
+  border-radius: 3px;
+}
+
+.color-info {
+  padding: 8px 10px;
+  background: #FFFFFF;
+}
+
+.color-info .name {
+  font-weight: 500;
+  color: var(--content-primary);
+  font-size: 11px;
+  margin-bottom: 1px;
+}
+
+.color-info .hex {
+  font-size: 10px;
+  color: var(--content-tertiary);
+  font-family: Consolas, monospace;
+}
+
+/* === Section === */
+.section {
+  padding: 48px 32px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.section-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--content-primary);
+  margin-bottom: 28px;
+}
+
+/* === Typography Showcase === */
+.typo-showcase {
+  background: #FFFFFF;
+  border: 1px solid var(--border-default);
+  border-radius: 12px;
+  padding: 32px;
+}
+
+.typo-row {
+  display: flex;
+  align-items: baseline;
+  gap: 20px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border-default);
+}
+
+.typo-row:last-child { border-bottom: none; }
+
+.typo-label {
+  width: 120px;
+  flex-shrink: 0;
+  font-size: 11px;
+  color: var(--content-tertiary);
+  font-family: Consolas, monospace;
+}
+
+.typo-sample { flex: 1; }
+
+/* === CSS Vars === */
+.css-vars {
+  background: #2A2424;
+  color: #E8E5E0;
+  padding: 28px;
+  border-radius: 12px;
+  font-family: Consolas, monospace;
+  font-size: 12px;
+  line-height: 1.8;
+  overflow-x: auto;
+}
+
+.css-vars .comment { color: var(--color-gold); }
+.css-vars .prop { color: var(--color-orange); }
+.css-vars .val { color: #8DB9D8; }
+
+/* === Opacity Scale === */
+.opacity-scale {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 32px;
+}
+
+.opacity-step {
+  flex: 1;
+  text-align: center;
+  border-radius: var(--radius-sm);
+  padding: 12px 4px;
+  border: 1px solid var(--border-default);
+}
+
+.opacity-step .swatch {
+  height: 40px;
+  border-radius: 6px;
+  margin-bottom: 6px;
+}
+
+.opacity-step .label {
+  font-size: 10px;
+  color: var(--content-tertiary);
+  font-family: Consolas, monospace;
+}
+
+/* === Footer === */
+.footer-links {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  padding: 16px;
+}
+
+.footer-links a {
+  font-size: 13px;
+  color: #6B7280;
+  text-decoration: none;
+  transition: var(--transition-fast);
+}
+
+.footer-links a:hover {
+  color: var(--content-primary);
+}
+
+@media (max-width: 768px) {
+  .sidebar { display: none; }
+  .color-grid { grid-template-columns: repeat(2, 1fr); }
+  .opacity-scale { flex-wrap: wrap; }
+}
+</style>
+</head>
+<body>
+
+<div class="page-layout">
+  <!-- 侧边栏 -->
+  <aside class="sidebar">
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:4px 0 8px;">
+      <span style="font-weight:600;font-size:16px;color:var(--content-primary);">StepFun</span>
+      <button class="btn-icon" title="New conversation">+</button>
+    </div>
+    <button class="btn-secondary" style="width:100%;justify-content:center;margin-bottom:8px;">
+      + New conversation
+    </button>
+    <div class="sidebar-section">
+      <div class="sidebar-section-title">Today</div>
+      <div class="sidebar-item active">Design style validation</div>
+      <div class="sidebar-item">Color system analysis</div>
+      <div class="sidebar-item">Typography review</div>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-section-title">Yesterday</div>
+      <div class="sidebar-item">Component extraction</div>
+      <div class="sidebar-item">Layout analysis</div>
+    </div>
+    <div style="flex:1;"></div>
+    <div style="padding:8px 0;border-top:1px solid var(--border-default);">
+      <button class="btn-primary" style="width:100%;text-align:center;">Log in</button>
+    </div>
+  </aside>
+
+  <!-- 主区域 -->
+  <main class="main-area">
+    <!-- 顶栏 -->
+    <div class="topbar">
+      <div class="topbar-left">
+        <button class="btn-model">StepClaw</button>
+      </div>
+      <div style="display:flex;gap:4px;">
+        <button class="btn-icon" title="Share">↗</button>
+        <button class="btn-icon" title="Settings">⚙</button>
+      </div>
+    </div>
+
+    <!-- 对话区 -->
+    <div class="chat-area" id="chat-area">
+      <h1 style="font-size:36px;font-weight:400;line-height:40px;color:var(--content-primary);margin-bottom:16px;">设计风格验证</h1>
+      <p style="font-size:14px;color:var(--content-secondary);margin-bottom:32px;">验证从 stepfun.com 提取的设计风格指南</p>
+
+      <!-- 功能标签 -->
+      <div class="tool-tags">
+        <button class="tool-tag">
+          <span class="dot" style="background:var(--color-blue);"></span>
+          Web Search
+        </button>
+        <button class="tool-tag">
+          <span class="dot" style="background:var(--color-blue);"></span>
+          DeepSeek R1
+          <span class="new-badge">NEW</span>
+        </button>
+        <button class="tool-tag">
+          <span class="dot" style="background:var(--color-green);"></span>
+          Diligence Check
+        </button>
+        <button class="tool-tag">
+          <span class="dot" style="background:var(--color-purple);"></span>
+          Knowledge Base
+        </button>
+        <button class="tool-tag">
+          <span class="dot" style="background:var(--color-orange);"></span>
+          Image Creation
+        </button>
+        <button class="tool-tag">
+          <span class="dot" style="background:var(--color-gold);background:var(--color-gold);"></span>
+          Deploy StepClaw
+        </button>
+      </div>
+    </div>
+
+    <!-- 输入区 -->
+    <div class="input-area">
+      <div class="chat-input-wrap">
+        <div class="chat-input-area">
+          <textarea rows="1" placeholder="Ask StepFun anything..."></textarea>
+          <button class="btn-icon" style="background:var(--content-primary);color:var(--content-reverse);border-radius:8px;width:28px;height:28px;">↑</button>
+        </div>
+      </div>
+      <div style="text-align:center;margin-top:8px;">
+        <span style="font-size:12px;color:var(--content-quaterary);">StepFun may produce inaccurate information. Verify important facts.</span>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- 以下为详细展示区，对话区下方展开 -->
+<section class="section" id="colors">
+  <h2 class="section-title">色彩系统</h2>
+
+  <h3 style="font-size:16px;font-weight:500;color:var(--content-primary);margin-bottom:16px;">品牌色 & 文字色透明度层级</h3>
+  <div class="opacity-scale">
+    <div class="opacity-step"><div class="swatch" style="background:rgba(42,36,36,0.04);"></div><div class="label">0.04</div></div>
+    <div class="opacity-step"><div class="swatch" style="background:rgba(42,36,36,0.08);border:1px solid rgba(42,36,36,0.08);"></div><div class="label">0.08</div></div>
+    <div class="opacity-step"><div class="swatch" style="background:rgba(42,36,36,0.16);"></div><div class="label">0.16</div></div>
+    <div class="opacity-step"><div class="swatch" style="background:rgba(42,36,36,0.35);"></div><div class="label">0.35</div></div>
+    <div class="opacity-step"><div class="swatch" style="background:rgba(42,36,36,0.5);"></div><div class="label">0.5</div></div>
+    <div class="opacity-step"><div class="swatch" style="background:rgba(42,36,36,0.7);"></div><div class="label">0.7</div></div>
+    <div class="opacity-step"><div class="swatch" style="background:rgba(42,36,36,0.8);"></div><div class="label">0.8</div></div>
+    <div class="opacity-step"><div class="swatch" style="background:#2A2424;"></div><div class="label">1.0</div></div>
+  </div>
+
+  <h3 style="font-size:16px;font-weight:500;color:var(--content-primary);margin-bottom:16px;">背景色</h3>
+  <div class="color-grid">
+    <div class="color-card">
+      <div class="color-swatch" style="background:#FCFCF9;border:1px solid var(--border-default);"><span style="background:rgba(0,0,0,0.05);color:#333;">Paper</span></div>
+      <div class="color-info"><div class="name">Background</div><div class="hex">#FCFCF9</div></div>
+    </div>
+    <div class="color-card">
+      <div class="color-swatch" style="background:#F6F4F1;"><span style="background:rgba(0,0,0,0.05);color:#333;">Gold BG</span></div>
+      <div class="color-info"><div class="name">Gold Background</div><div class="hex">#F6F4F1</div></div>
+    </div>
+    <div class="color-card">
+      <div class="color-swatch" style="background:#FAF9F5;"><span style="background:rgba(0,0,0,0.05);color:#333;">Shallow</span></div>
+      <div class="color-info"><div class="name">Shallow Gold</div><div class="hex">#FAF9F5</div></div>
+    </div>
+    <div class="color-card">
+      <div class="color-swatch" style="background:#F3F1EE;"><span style="background:rgba(0,0,0,0.05);color:#333;">Hover</span></div>
+      <div class="color-info"><div class="name">Hover New</div><div class="hex">#F3F1EE</div></div>
+    </div>
+  </div>
+
+  <h3 style="font-size:16px;font-weight:500;color:var(--content-primary);margin-bottom:16px;">功能色</h3>
+  <div class="color-grid">
+    <div class="color-card">
+      <div class="color-swatch" style="background:#3986C5;"><span style="background:rgba(0,0,0,0.1);color:#fff;">Blue</span></div>
+      <div class="color-info"><div class="name">Blue</div><div class="hex">#3986C5</div></div>
+    </div>
+    <div class="color-card">
+      <div class="color-swatch" style="background:#74AD5D;"><span style="background:rgba(0,0,0,0.1);color:#fff;">Green</span></div>
+      <div class="color-info"><div class="name">Green</div><div class="hex">#74AD5D</div></div>
+    </div>
+    <div class="color-card">
+      <div class="color-swatch" style="background:#E5893E;"><span style="background:rgba(0,0,0,0.1);color:#fff;">Orange</span></div>
+      <div class="color-info"><div class="name">Orange</div><div class="hex">#E5893E</div></div>
+    </div>
+    <div class="color-card">
+      <div class="color-swatch" style="background:#8361B0;"><span style="background:rgba(0,0,0,0.1);color:#fff;">Purple</span></div>
+      <div class="color-info"><div class="name">Purple</div><div class="hex">#8361B0</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 排版 -->
+<section class="section">
+  <h2 class="section-title">排版系统</h2>
+  <div class="typo-showcase">
+    <div class="typo-row">
+      <div class="typo-label">36px / 400<br>标题</div>
+      <div class="typo-sample" style="font-size:36px;font-weight:400;line-height:40px;color:#2A2424;">Good afternoon. How can I assist you?</div>
+    </div>
+    <div class="typo-row">
+      <div class="typo-label">14px / 500<br>按钮</div>
+      <div class="typo-sample" style="font-size:14px;font-weight:500;color:#2A2424;">New conversation · StepClaw · Log in</div>
+    </div>
+    <div class="typo-row">
+      <div class="typo-label">14px / 400<br>工具标签</div>
+      <div class="typo-sample" style="font-size:14px;font-weight:400;color:#2A2424;">Web Search · DeepSeek R1 · Diligence Check</div>
+    </div>
+    <div class="typo-row">
+      <div class="typo-label">13px / 400<br>链接</div>
+      <div class="typo-sample" style="font-size:13px;font-weight:400;color:rgba(42,36,36,0.7);">About StepFun · Careers</div>
+    </div>
+  </div>
+  <div style="margin-top:16px;padding:16px 20px;background:#FFFFFF;border-radius:12px;border:1px solid var(--border-default);">
+    <p style="font-size:13px;color:var(--content-tertiary);font-family:Consolas,monospace;">font-family: Gilroy, ui-sans-serif, system-ui, -apple-system, sans-serif;</p>
+  </div>
+</section>
+
+<!-- 交互 -->
+<section class="section">
+  <h2 class="section-title">交互效果</h2>
+
+  <h3 style="font-size:15px;font-weight:500;color:var(--content-primary);margin-bottom:12px;">按钮状态</h3>
+  <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:32px;">
+    <button class="btn-primary">Log in</button>
+    <button class="btn-secondary">+ New conversation</button>
+    <button class="btn-icon" title="Menu">☰</button>
+    <button class="btn-model">StepClaw</button>
+  </div>
+
+  <h3 style="font-size:15px;font-weight:500;color:var(--content-primary);margin-bottom:12px;">功能标签</h3>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:32px;">
+    <span style="display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:var(--radius-sm);background:var(--fill-blue);font-size:13px;color:var(--color-blue);">
+      <span style="width:6px;height:6px;border-radius:50%;background:var(--color-blue);"></span> Web Search
+    </span>
+    <span style="display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:var(--radius-sm);background:var(--fill-green);font-size:13px;color:var(--color-green);">
+      <span style="width:6px;height:6px;border-radius:50%;background:var(--color-green);"></span> Diligence Check
+    </span>
+    <span style="display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:var(--radius-sm);background:var(--fill-purple);font-size:13px;color:var(--color-purple);">
+      <span style="width:6px;height:6px;border-radius:50%;background:var(--color-purple);"></span> Knowledge Base
+    </span>
+    <span style="display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:var(--radius-sm);background:var(--fill-orange);font-size:13px;color:var(--color-orange);">
+      <span style="width:6px;height:6px;border-radius:50%;background:var(--color-orange);"></span> Image Creation
+    </span>
+    <span style="display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:var(--radius-sm);background:var(--fill-red);font-size:13px;color:var(--color-red);">
+      <span style="width:6px;height:6px;border-radius:50%;background:var(--color-red);"></span> Error
+    </span>
+    <span style="display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:var(--radius-sm);background:var(--fill-gold);font-size:13px;color:var(--color-gold);">
+      <span style="width:6px;height:6px;border-radius:50%;background:var(--color-gold);"></span> Deploy
+    </span>
+  </div>
+
+  <h3 style="font-size:15px;font-weight:500;color:var(--content-primary);margin-bottom:12px;">圆角系统</h3>
+  <div style="display:flex;gap:16px;align-items:center;margin-bottom:32px;">
+    <div style="width:32px;height:32px;background:var(--bg-hover-new);border:1px solid var(--border-default);border-radius:var(--radius-full);display:flex;align-items:center;justify-content:center;font-size:12px;">+</div>
+    <span style="font-size:12px;color:var(--content-tertiary);">9999px (图标按钮)</span>
+    <div style="padding:6px 12px;background:var(--bg-hover-new);border:1px solid var(--border-default);border-radius:var(--radius-md);font-size:12px;">StepClaw</div>
+    <span style="font-size:12px;color:var(--content-tertiary);">10px (模型按钮)</span>
+    <div style="padding:6px 12px;background:var(--bg-hover-new);border:1px solid var(--border-default);border-radius:var(--radius-sm);font-size:12px;">Log in</div>
+    <span style="font-size:12px;color:var(--content-tertiary);">8px (内容按钮)</span>
+  </div>
+</section>
+
+<!-- CSS变量 -->
+<section class="section">
+  <h2 class="section-title">CSS Variable Reference</h2>
+  <div class="css-vars">
+    <span class="comment">/* 品牌色 */</span><br>
+    <span class="prop">--content-primary</span>: <span class="val">rgba(42, 36, 36, 1)</span>;  <span class="comment">/* #2A2424 */</span><br>
+    <span class="prop">--content-secondary</span>: <span class="val">rgba(42, 36, 36, 0.7)</span>;<br>
+    <span class="prop">--content-tertiary</span>: <span class="val">rgba(42, 36, 36, 0.5)</span>;<br>
+    <span class="prop">--content-disable</span>: <span class="val">rgba(42, 36, 36, 0.35)</span>;<br>
+    <span class="prop">--content-hover</span>: <span class="val">rgba(42, 36, 36, 0.8)</span>;<br><br>
+
+    <span class="comment">/* 背景 */</span><br>
+    <span class="prop">--background</span>: <span class="val">#FCFCF9</span>;<br>
+    <span class="prop">--bg-gold</span>: <span class="val">#F6F4F1</span>;<br>
+    <span class="prop">--color-fill-shallowgold</span>: <span class="val">#FAF9F5</span>;<br>
+    <span class="prop">--hover-new</span>: <span class="val">#F3F1EE</span>;<br><br>
+
+    <span class="comment">/* 边框 */</span><br>
+    <span class="prop">--border-default</span>: <span class="val">rgba(42, 36, 36, 0.08)</span>;<br>
+    <span class="prop">--border-hover</span>: <span class="val">rgba(42, 36, 36, 0.16)</span>;<br><br>
+
+    <span class="comment">/* 功能色 */</span><br>
+    <span class="prop">--color-blue</span>: <span class="val">#3986C5</span>;<br>
+    <span class="prop">--color-green</span>: <span class="val">#74AD5D</span>;<br>
+    <span class="prop">--color-orange</span>: <span class="val">#E5893E</span>;<br>
+    <span class="prop">--color-purple</span>: <span class="val">#8361B0</span>;<br>
+    <span class="prop">--color-red</span>: <span class="val">#D55959</span>;<br><br>
+
+    <span class="comment">/* 字体 */</span><br>
+    <span class="prop">--font</span>: <span class="val">Gilroy, ui-sans-serif, system-ui, sans-serif</span>;<br><br>
+
+    <span class="comment">/* 圆角 */</span><br>
+    <span class="prop">--radius</span>: <span class="val">0.5rem</span>;
+  </div>
+</section>
+
+<!-- 底部 -->
+<div class="footer-links">
+  <a href="#">About StepFun</a>
+  <a href="#">Careers</a>
+  <span style="font-size:12px;color:var(--content-quaterary);">Design Style Validation · 2026-04-16 · v1.0.0</span>
+</div>
+
+</body>
+</html>

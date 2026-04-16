@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>硅基流动 SiliconFlow - 设计风格验证</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --color-primary: #6E29F6;
+  --color-primary-dark: #5922C6;
+  --color-primary-light: #9E70F9;
+  --color-text-heading: #1E293B;
+  --color-text-body: #475569;
+  --color-text-secondary: #64748B;
+  --color-text-on-dark: #FAFDFF;
+  --bg-white: #FFFFFF;
+  --bg-card: #F5F5F8;
+  --bg-dark-1: #1D1F2C;
+  --bg-dark-2: #252736;
+  --border-default: #E5E7EB;
+  --border-purple: #9E70F9;
+  --gradient-brand: linear-gradient(to right, #252736, #6E29F6);
+  --spacing-md: 16px;
+  --spacing-xl: 32px;
+  --radius-sm: 8px;
+  --radius-md: 15px;
+  --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: Roboto, "SF Pro SC", "SF Pro Display", "PingFang SC", -apple-system, "Segoe UI", "Microsoft Yahei", "Helvetica Neue", Arial, sans-serif;
+  color: var(--color-text-body);
+  background: var(--bg-white);
+  line-height: 1.75;
+  font-size: 16px;
+}
+
+/* === 导航栏 === */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--bg-white);
+  padding: 16px 32px;
+  height: 78px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border-default);
+}
+
+.navbar-brand {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--color-text-heading);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.navbar-brand .brand-dot {
+  width: 28px;
+  height: 28px;
+  background: var(--gradient-brand);
+  border-radius: 6px;
+}
+
+.navbar-nav {
+  display: flex;
+  align-items: center;
+  gap: 36px;
+  list-style: none;
+}
+
+.navbar-nav a {
+  color: var(--color-text-heading);
+  text-decoration: none;
+  font-size: 16px;
+  transition: color var(--transition-fast);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.navbar-nav a:hover {
+  color: var(--color-primary);
+}
+
+.btn-login {
+  background: var(--color-primary);
+  color: #FFFFFF;
+  border: none;
+  padding: 8px 24px;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+
+.btn-login:hover {
+  background: var(--color-primary-dark);
+}
+
+/* === Hero 区 === */
+.hero {
+  background: var(--gradient-brand);
+  padding: 80px 32px 100px;
+  text-align: center;
+  color: #FFFFFF;
+}
+
+.hero h2 {
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 72px;
+  margin-bottom: 24px;
+}
+
+.hero p {
+  font-size: 20px;
+  line-height: 1.5;
+  opacity: 0.85;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.hero .btn-cta {
+  display: inline-block;
+  margin-top: 40px;
+  background: #FFFFFF;
+  color: var(--color-primary);
+  padding: 14px 40px;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.hero .btn-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(110, 41, 246, 0.35);
+}
+
+/* === 色彩系统展示 === */
+.section {
+  padding: 74px 32px;
+  max-width: 1265px;
+  margin: 0 auto;
+}
+
+.section-title {
+  font-size: 48px;
+  font-weight: 700;
+  color: var(--color-text-heading);
+  text-align: center;
+  margin-bottom: 66px;
+  line-height: 1.5;
+}
+
+.color-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.color-card {
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border-default);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.color-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+}
+
+.color-swatch {
+  height: 100px;
+  display: flex;
+  align-items: flex-end;
+  padding: 8px 12px;
+}
+
+.color-swatch span {
+  font-size: 12px;
+  font-weight: 500;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.color-info {
+  padding: 12px 16px;
+  background: #FFFFFF;
+}
+
+.color-info .name {
+  font-weight: 600;
+  color: var(--color-text-heading);
+  font-size: 14px;
+}
+
+.color-info .hex {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  font-family: monospace;
+}
+
+/* === 排版展示 === */
+.typo-showcase {
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  padding: 48px 40px;
+}
+
+.typo-row {
+  display: flex;
+  align-items: baseline;
+  gap: 24px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--border-default);
+}
+
+.typo-row:last-child {
+  border-bottom: none;
+}
+
+.typo-label {
+  width: 140px;
+  flex-shrink: 0;
+  font-size: 13px;
+  color: var(--color-text-secondary);
+}
+
+.typo-sample {
+  flex: 1;
+}
+
+/* === 组件展示 === */
+.component-section {
+  padding: 74px 32px;
+  background: var(--bg-card);
+}
+
+.component-inner {
+  max-width: 1265px;
+  margin: 0 auto;
+}
+
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.feature-card {
+  background: #FFFFFF;
+  padding: 32px;
+  border-radius: var(--radius-md);
+  min-height: 280px;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.feature-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+}
+
+.feature-card h3 {
+  font-size: 32px;
+  font-weight: 600;
+  color: var(--color-text-heading);
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.feature-card ul {
+  list-style: disc;
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.feature-card li {
+  font-size: 16px;
+  line-height: 28px;
+  color: var(--color-text-body);
+}
+
+/* === 性能数据展示 === */
+.perf-section {
+  background: var(--bg-dark-1);
+  padding: 0;
+  overflow: hidden;
+}
+
+.perf-row {
+  display: flex;
+  padding-left: 92px;
+  padding-right: 112px;
+  border-bottom: 1px solid var(--border-purple);
+  min-height: 241px;
+  align-items: center;
+}
+
+.perf-row:last-child {
+  border-bottom: none;
+}
+
+.perf-big {
+  font-size: 84px;
+  font-weight: 700;
+  line-height: 100%;
+  color: var(--color-text-on-dark);
+  margin-bottom: 12px;
+}
+
+.perf-label {
+  font-size: 24px;
+  line-height: 100%;
+  color: var(--color-text-on-dark);
+}
+
+/* === 行业方案展示 === */
+.industry-section {
+  padding: 74px 32px;
+  max-width: 1265px;
+  margin: 0 auto;
+}
+
+.industry-tabs {
+  display: flex;
+  gap: 2px;
+  height: 406px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.industry-tab {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 24px;
+  font-weight: 600;
+  color: #FFFFFF;
+  padding: 0 26px;
+  transition: flex var(--transition-normal), background var(--transition-fast);
+  overflow: hidden;
+}
+
+.industry-tab.active {
+  flex: 3;
+  padding: 30px 40px;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.industry-tab h3 {
+  font-size: 40px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  white-space: nowrap;
+}
+
+.industry-tab p {
+  font-size: 16px;
+  line-height: 1.75;
+  display: none;
+}
+
+.industry-tab.active p {
+  display: block;
+}
+
+.tab-internet { background: linear-gradient(135deg, #3B82F6, #2563EB); }
+.tab-education { background: linear-gradient(135deg, #6E29F6, #844BF7); }
+.tab-government { background: linear-gradient(135deg, #1E293B, #475569); }
+.tab-datacenter { background: linear-gradient(135deg, #0F766E, #14B8A6); }
+.tab-hardware { background: linear-gradient(135deg, #252736, #6E29F6); }
+
+/* === 渐变展示 === */
+.gradient-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.gradient-card {
+  height: 120px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: flex-end;
+  padding: 16px 20px;
+}
+
+.gradient-card .gradient-label {
+  background: rgba(0,0,0,0.5);
+  color: #FFFFFF;
+  font-size: 13px;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-family: monospace;
+}
+
+/* === CSS变量展示 === */
+.css-vars {
+  background: var(--bg-dark-1);
+  color: #F1F5F9;
+  padding: 48px 40px;
+  border-radius: var(--radius-md);
+  font-family: 'Consolas', 'Fira Code', monospace;
+  font-size: 14px;
+  line-height: 2;
+  overflow-x: auto;
+}
+
+.css-vars .comment { color: #9E70F9; }
+.css-vars .prop { color: #844BF7; }
+.css-vars .val { color: #A5F3FC; }
+
+/* === 底部 === */
+.footer {
+  background: var(--bg-dark-1);
+  padding: 60px 32px 32px;
+  text-align: center;
+  color: #B2ACBD;
+  font-size: 14px;
+}
+
+.footer-divider {
+  height: 1px;
+  background: var(--border-purple);
+  margin-bottom: 24px;
+  opacity: 0.3;
+}
+
+/* === 按钮 Demo === */
+.btn-demo {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 24px;
+}
+
+.demo-btn-primary {
+  background: var(--color-primary);
+  color: #FFFFFF;
+  border: none;
+  padding: 12px 32px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+
+.demo-btn-primary:hover {
+  background: var(--color-primary-dark);
+}
+
+.demo-btn-primary:active {
+  background: #4A1DAA;
+}
+
+.demo-btn-outline {
+  background: transparent;
+  color: var(--color-primary);
+  border: 2px solid var(--color-primary);
+  padding: 12px 32px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background var(--transition-fast), color var(--transition-fast);
+}
+
+.demo-btn-outline:hover {
+  background: var(--color-primary);
+  color: #FFFFFF;
+}
+
+.demo-link {
+  color: var(--color-text-heading);
+  text-decoration: none;
+  font-size: 16px;
+  transition: color var(--transition-fast);
+  cursor: pointer;
+}
+
+.demo-link:hover {
+  color: var(--color-primary);
+}
+
+/* === 响应式 === */
+@media (max-width: 768px) {
+  .hero h2 { font-size: 32px; line-height: 48px; }
+  .section-title { font-size: 32px; margin-bottom: 40px; }
+  .color-grid { grid-template-columns: repeat(2, 1fr); }
+  .feature-grid { grid-template-columns: 1fr; }
+  .industry-tabs { flex-direction: column; height: auto; }
+  .industry-tab { height: 80px; }
+  .industry-tab.active { height: 280px; flex: none; }
+  .gradient-grid { grid-template-columns: 1fr; }
+  .perf-big { font-size: 48px; }
+  .perf-label { font-size: 18px; }
+  .perf-row { padding: 32px 24px; }
+  .navbar-nav { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- 导航栏 -->
+<nav class="navbar">
+  <div class="navbar-brand">
+    <div class="brand-dot"></div>
+    <span>SiliconFlow</span>
+  </div>
+  <ul class="navbar-nav">
+    <li><a href="#colors">产品</a></li>
+    <li><a href="#typography">模型</a></li>
+    <li><a href="#components">价格</a></li>
+    <li><a href="#layout">文档</a></li>
+    <li><a href="#industry">生态合作</a></li>
+    <li><a href="#footer">关于</a></li>
+  </ul>
+  <button class="btn-login">登录</button>
+</nav>
+
+<!-- Hero 区 -->
+<section class="hero">
+  <h2>硅基流动设计风格验证</h2>
+  <p>本页面用于验证从 siliconflow.cn 提取的设计风格指南，包括色彩系统、排版规范、组件样式和布局的准确性。</p>
+  <a href="#colors" class="btn-cta">查看设计元素</a>
+</section>
+
+<!-- 色彩系统展示 -->
+<section class="section" id="colors">
+  <h2 class="section-title">色彩系统</h2>
+
+  <h3 style="font-size:24px;font-weight:600;color:var(--color-text-heading);margin-bottom:24px;">品牌主色与辅助色</h3>
+  <div class="color-grid" style="margin-bottom:48px;">
+    <div class="color-card">
+      <div class="color-swatch" style="background:#6E29F6;"><span style="background:rgba(255,255,255,0.2);color:#fff;">品牌主色</span></div>
+      <div class="color-info"><div class="name">Primary</div><div class="hex">#6E29F6</div></div>
+    </div>
+    <div class="color-card">
+      <div class="color-swatch" style="background:#743AED;"><span style="background:rgba(255,255,255,0.2);color:#fff;">深紫过渡</span></div>
+      <div class="color-info"><div class="name">Primary Deep</div><div class="hex">#743AED</div></div>
+    </div>
+    <div class="color-card">
+      <div class="color-swatch" style="background:#5922C6;"><span style="background:rgba(255,255,255,0.2);color:#fff;">暗紫延伸</span></div>
+      <div class="color-info"><div class="name">Primary Dark</div><div class="hex">#5922C6</div></div>
+    </div>
+    <div class="color-card">
+      <div class="color-swatch" style="background:#9E70F9;"><span style="background:rgba(0,0,0,0.15);color:#fff;">浅紫装饰</span></div>
+      <div class="color-info"><div class="name">Primary Light</div><div class="hex">#9E70F9</div></div>
+    </div>
+  </div>
+
+  <h3 style="font-size:24px;font-weight:600;color:var(--color-text-heading);margin-bottom:24px;">文字颜色</h3>
+  <div class="color-grid" style="margin-bottom:48px;">
+    <div class="color-card">
+      <div class="color-swatch" style="background:#1E293B;"><span style="background:rgba(255,255,255,0.2);color:#fff;">标题</span></div>
+      <div class="color-info"><div class="name">Heading (slate-800)</div><div class="hex">#1E293B</div></div>
+    </div>
+    <div class="color-card">
+      <div class="color-swatch" style="background:#475569;"><span style="background:rgba(255,255,255,0.2);color:#fff;">正文</span></div>
+      <div class="color-info"><div class="name">Body (slate-600)</div><div class="hex">#475569</div></div>
+    </div>
+    <div class="color-card">
+      <div class="color-swatch" style="background:#64748B;"><span style="background:rgba(255,255,255,0.2);color:#fff;">辅助</span></div>
+      <div class="color-info"><div class="name">Secondary (slate-500)</div><div class="hex">#64748B</div></div>
+    </div>
+    <div class="color-card">
+      <div class="color-swatch" style="background:#FAFDFF;border:1px solid #E5E7EB;"><span style="background:rgba(0,0,0,0.1);color:#333;">深色区标题</span></div>
+      <div class="color-info"><div class="name">On Dark Heading</div><div class="hex">#FAFDFF</div></div>
+    </div>
+  </div>
+
+  <h3 style="font-size:24px;font-weight:600;color:var(--color-text-heading);margin-bottom:24px;">背景与边框</h3>
+  <div class="color-grid" style="margin-bottom:48px;">
+    <div class="color-card">
+      <div class="color-swatch" style="background:#FFFFFF;border:1px solid #E5E7EB;"><span style="background:rgba(0,0,0,0.06);color:#333;">白色</span></div>
+      <div class="color-info"><div class="name">White</div><div class="hex">#FFFFFF</div></div>
+    </div>
+    <div class="color-card">
+      <div class="color-swatch" style="background:#F5F5F8;"><span style="background:rgba(0,0,0,0.08);color:#333;">卡片背景</span></div>
+      <div class="color-info"><div class="name">Card BG</div><div class="hex">#F5F5F8</div></div>
+    </div>
+    <div class="color-card">
+      <div class="color-swatch" style="background:#1D1F2C;"><span style="background:rgba(255,255,255,0.2);color:#fff;">深色区1</span></div>
+      <div class="color-info"><div class="name">Dark BG 1</div><div class="hex">#1D1F2C</div></div>
+    </div>
+    <div class="color-card">
+      <div class="color-swatch" style="background:#252736;"><span style="background:rgba(255,255,255,0.2);color:#fff;">深色区2</span></div>
+      <div class="color-info"><div class="name">Dark BG 2</div><div class="hex">#252736</div></div>
+    </div>
+  </div>
+
+  <h3 style="font-size:24px;font-weight:600;color:var(--color-text-heading);margin-bottom:24px;">渐变色</h3>
+  <div class="gradient-grid">
+    <div class="gradient-card" style="background:linear-gradient(to right, #252736, #6E29F6);">
+      <span class="gradient-label">linear-gradient(to right, #252736, #6E29F6)</span>
+    </div>
+    <div class="gradient-card" style="background:linear-gradient(135deg, #3B82F6, #6E29F6);">
+      <span class="gradient-label">蓝色→紫色渐变</span>
+    </div>
+  </div>
+</section>
+
+<!-- 排版展示 -->
+<section class="section" id="typography" style="background:var(--bg-card);">
+  <div style="max-width:1265px;margin:0 auto;">
+    <h2 class="section-title">排版系统</h2>
+
+    <div class="typo-showcase">
+      <div class="typo-row">
+        <div class="typo-label">Hero 大标题<br>48px / 700</div>
+        <div class="typo-sample" style="font-size:48px;font-weight:700;line-height:72px;color:#1E293B;">全场景产品矩阵，支撑 AI 应用全流程</div>
+      </div>
+      <div class="typo-row">
+        <div class="typo-label">区块标题<br>32px / 600</div>
+        <div class="typo-sample" style="font-size:32px;font-weight:600;line-height:48px;color:#1E293B;">开箱即用的大模型 API</div>
+      </div>
+      <div class="typo-row">
+        <div class="typo-label">特性标题<br>36px / 600</div>
+        <div class="typo-sample" style="font-size:36px;font-weight:600;line-height:36px;color:#FAFDFF;background:#1D1F2C;padding:8px 16px;border-radius:8px;">高速推理</div>
+      </div>
+      <div class="typo-row">
+        <div class="typo-label">大数据指标<br>84px / 700</div>
+        <div class="typo-sample" style="font-size:84px;font-weight:700;line-height:100%;color:#FAFDFF;background:#1D1F2C;padding:8px 16px;border-radius:8px;">10x+</div>
+      </div>
+      <div class="typo-row">
+        <div class="typo-label">小标题<br>24px / 600</div>
+        <div class="typo-sample" style="font-size:24px;font-weight:600;line-height:36px;color:#1E293B;">语音</div>
+      </div>
+      <div class="typo-row">
+        <div class="typo-label">正文<br>16px / 400</div>
+        <div class="typo-sample" style="font-size:16px;font-weight:400;line-height:28px;color:#475569;">经过开发者验证，保证高可靠稳定运行。提供完善的监控和容错机制，保障服务能力。</div>
+      </div>
+      <div class="typo-row">
+        <div class="typo-label">辅助文本<br>16px / 400</div>
+        <div class="typo-sample" style="font-size:16px;font-weight:400;line-height:24px;color:#64748B;">页面 · 产品 · 法律 · 联系我们</div>
+      </div>
+    </div>
+
+    <div style="margin-top:32px;padding:24px 32px;background:#FFFFFF;border-radius:12px;border:1px solid #E5E7EB;">
+      <h4 style="font-size:18px;font-weight:600;color:#1E293B;margin-bottom:12px;">字体栈</h4>
+      <p style="font-size:14px;color:#475569;font-family:Consolas,monospace;word-break:break-all;line-height:1.8;">
+        font-family: Roboto, "SF Pro SC", "SF Pro Display", "PingFang SC", -apple-system, "Segoe UI", "Microsoft Yahei", "Helvetica Neue", Arial, sans-serif;
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- 组件展示 -->
+<section class="component-section" id="components">
+  <div class="component-inner">
+    <h2 class="section-title">组件样式</h2>
+
+    <h3 style="font-size:24px;font-weight:600;color:var(--color-text-heading);margin-bottom:24px;">按钮</h3>
+    <div class="btn-demo">
+      <button class="demo-btn-primary">登录</button>
+      <button class="demo-btn-primary" style="background:#844BF7;">开始使用</button>
+      <button class="demo-btn-outline">了解更多</button>
+      <a href="#" class="demo-link">文档 →</a>
+      <a href="#" class="demo-link">模型</a>
+    </div>
+
+    <h3 style="font-size:24px;font-weight:600;color:var(--color-text-heading);margin:48px 0 24px;">特性卡片</h3>
+    <div class="feature-grid">
+      <div class="feature-card">
+        <h3>高稳定性</h3>
+        <ul>
+          <li>经过开发者验证，保证高可靠稳定运行。</li>
+          <li>提供完善的监控和容错机制，保障服务能力。</li>
+          <li>提供专业技术支持，满足企业级场景需求，确保服务高可用性。</li>
+        </ul>
+      </div>
+      <div class="feature-card">
+        <h3>高智能</h3>
+        <ul>
+          <li>提供多种先进模型服务，包括大语言模型、音视频等多模态模型。</li>
+          <li>智能扩展功能，灵活适配业务规模，满足多种服务需求。</li>
+          <li>智能成本分析，为业务优化提供支持，助力成本管控与效益提升。</li>
+        </ul>
+      </div>
+      <div class="feature-card">
+        <h3>高安全性</h3>
+        <ul>
+          <li>支持 BYOC 部署，全面保护数据隐私与业务安全。</li>
+          <li>计算隔离/网络隔离/存储隔离，保障数据安全。</li>
+          <li>符合行业标准与合规要求，全面满足企业级用户的安全需求。</li>
+        </ul>
+      </div>
+      <div class="feature-card">
+        <h3>高扩展性</h3>
+        <ul>
+          <li>动态扩容支持弹性业务模型，无缝适配多种复杂场景。</li>
+          <li>一键部署自定义模型，轻松应对规模化挑战。</li>
+          <li>灵活架构设计，满足多样化任务需求，支持混合云部署。</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 性能数据展示 -->
+<section class="perf-section" id="layout">
+  <div style="max-width:1265px;margin:0 auto;padding:0;">
+    <div class="perf-row">
+      <div>
+        <div class="perf-big">10x+</div>
+        <div class="perf-label">速度提升，针对语言模型</div>
+      </div>
+    </div>
+    <div class="perf-row">
+      <div>
+        <div class="perf-big">1s</div>
+        <div class="perf-label">出图</div>
+      </div>
+    </div>
+    <div class="perf-row">
+      <div>
+        <div class="perf-big">100ms</div>
+        <div class="perf-label">语音生成</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 行业方案展示 -->
+<section class="industry-section" id="industry">
+  <h2 class="section-title">面向不同行业及需求场景，提供灵活的解决方案</h2>
+  <div class="industry-tabs">
+    <div class="industry-tab tab-internet active">
+      <div>
+        <h3>互联网</h3>
+        <p>提供高效智能的内容生成与个性化推荐服务，支持快速切换模型，加速 AI 生成速度，优化 GPU 算力使用。</p>
+      </div>
+    </div>
+    <div class="industry-tab tab-education">
+      <h3>教育</h3>
+      <p>为教育行业提供智能教学辅助与个性化学习方案。</p>
+    </div>
+    <div class="industry-tab tab-government">
+      <h3>政务</h3>
+      <p>助力政务服务智能化升级，提升行政效率。</p>
+    </div>
+    <div class="industry-tab tab-datacenter">
+      <h3>智算中心</h3>
+      <p>为智算中心提供高性能算力调度与管理方案。</p>
+    </div>
+    <div class="industry-tab tab-hardware">
+      <h3>AI 硬件</h3>
+      <p>对于 AI 移动终端、推理一体机等场景，解决端云协同延时痛点。</p>
+    </div>
+  </div>
+</section>
+
+<!-- CSS变量参考 -->
+<section class="section">
+  <h2 class="section-title">CSS 变量参考</h2>
+  <div class="css-vars">
+    <span class="comment">/* 品牌色 */</span><br>
+    <span class="prop">--color-primary</span>: <span class="val">#6E29F6</span>;<br>
+    <span class="prop">--color-primary-dark</span>: <span class="val">#5922C6</span>;<br>
+    <span class="prop">--color-primary-light</span>: <span class="val">#9E70F9</span>;<br><br>
+    <span class="comment">/* 文字颜色 */</span><br>
+    <span class="prop">--color-text-heading</span>: <span class="val">#1E293B</span>;<br>
+    <span class="prop">--color-text-body</span>: <span class="val">#475569</span>;<br>
+    <span class="prop">--color-text-secondary</span>: <span class="val">#64748B</span>;<br><br>
+    <span class="comment">/* 背景 */</span><br>
+    <span class="prop">--bg-white</span>: <span class="val">#FFFFFF</span>;<br>
+    <span class="prop">--bg-card</span>: <span class="val">#F5F5F8</span>;<br>
+    <span class="prop">--bg-dark-1</span>: <span class="val">#1D1F2C</span>;<br>
+    <span class="prop">--bg-dark-2</span>: <span class="val">#252736</span>;<br><br>
+    <span class="comment">/* 渐变 */</span><br>
+    <span class="prop">--gradient-brand</span>: <span class="val">linear-gradient(to right, #252736, #6E29F6)</span>;<br><br>
+    <span class="comment">/* 过渡 */</span><br>
+    <span class="prop">--transition-fast</span>: <span class="val">0.15s cubic-bezier(0.4, 0, 0.2, 1)</span>;<br>
+    <span class="prop">--transition-normal</span>: <span class="val">0.3s cubic-bezier(0.4, 0, 0.2, 1)</span>;
+  </div>
+</section>
+
+<!-- 底部 -->
+<footer class="footer" id="footer">
+  <div class="footer-divider"></div>
+  <p>硅基流动 SiliconFlow 设计风格验证页面</p>
+  <p style="margin-top:8px;opacity:0.6;">提取时间：2026-04-16 · 版本：1.0.0</p>
+</footer>
+
+<script>
+document.querySelectorAll('.industry-tab').forEach(tab => {
+  tab.addEventListener('click', function() {
+    document.querySelectorAll('.industry-tab').forEach(t => t.classList.remove('active'));
+    this.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>

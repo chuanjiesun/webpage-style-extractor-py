@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Insta360 Design Style - Validation Page</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@330;380;520;630;700&family=Roboto:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --brand-dark: rgb(38, 38, 41);
+  --brand-dark-hover: rgb(81, 81, 87);
+  --brand-dark-variant: rgb(39, 39, 42);
+  --pure-black: #000000;
+  --pure-white: #FFFFFF;
+  --light-bg: #F8F9FC;
+  --silver: #EDEFF2;
+  --medium-gray: #D9D9D9;
+  --secondary-text: #76767F;
+  --tertiary-text: rgba(39, 39, 42, 0.55);
+  --placeholder-text: #A1A1AA;
+  --red-accent: #F75A4D;
+  --sky-blue: #0EA5E9;
+  --outline-border: #E4E4E7;
+  --deep-dark: #1D1D1F;
+  --header-height: 64px;
+  --radius-pill: 50px;
+  --radius-card: 24px;
+  --radius-entry: 16px;
+  --font-title: "Poppins Old", "Noto Sans SC", Roboto, sans-serif;
+  --font-content: Roboto, "Noto Sans SC", "Poppins Old", sans-serif;
+  --font-new: Poppins, "MiSans VF", sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: var(--pure-black);
+  color: var(--pure-white);
+  font-family: var(--font-content);
+  line-height: 1.6;
+}
+
+.font-title { font-family: var(--font-new); font-weight: 630; }
+
+.section-dark { background: var(--pure-black); }
+.section-light { background: var(--pure-white); color: var(--brand-dark); }
+.section-gray { background: var(--light-bg); color: var(--brand-dark); }
+
+.container { max-width: 1280px; margin: 0 auto; padding: 0 40px; }
+
+/* Header */
+header {
+  height: var(--header-height);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40px;
+  background: var(--pure-black);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+header .logo {
+  font-family: var(--font-new);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--pure-white);
+  letter-spacing: -0.5px;
+}
+
+/* Hero */
+.hero {
+  height: 600px;
+  display: flex;
+  align-items: flex-end;
+  padding: 60px;
+  position: relative;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 200px;
+  background: linear-gradient(0deg,
+    rgba(0,0,0,0.4),
+    rgba(0,0,0,0.396) 6.67%,
+    rgba(0,0,0,0.384) 13.33%,
+    rgba(0,0,0,0.37) 20%,
+    rgba(0,0,0,0.34) 26.67%,
+    rgba(0,0,0,0.306) 33.33%,
+    rgba(0,0,0,0.267) 40%,
+    rgba(0,0,0,0.224) 46.67%,
+    rgba(0,0,0,0.176) 53.33%,
+    rgba(0,0,0,0.133) 60%,
+    rgba(0,0,0,0.094) 66.67%,
+    rgba(0,0,0,0.06) 73.33%,
+    rgba(0,0,0,0.03) 80%,
+    rgba(0,0,0,0.016) 86.67%,
+    rgba(0,0,0,0.004) 93.33%,
+    rgba(0,0,0,0));
+}
+
+.hero-content { position: relative; z-index: 1; max-width: 600px; }
+
+.hero h1 {
+  font-family: var(--font-new);
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 1.1;
+  margin-bottom: 16px;
+}
+
+.hero p {
+  font-size: 18px;
+  color: rgba(255,255,255,0.7);
+  margin-bottom: 32px;
+}
+
+.hero .btn-row { display: flex; gap: 12px; }
+
+/* Buttons */
+.btn-primary {
+  background: var(--brand-dark);
+  color: var(--pure-white);
+  border: none;
+  border-radius: var(--radius-pill);
+  padding: 14px 32px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.3s;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-primary:hover { background: var(--brand-dark-hover); }
+
+.btn-primary-sm {
+  background: var(--brand-dark);
+  color: var(--pure-white);
+  border: none;
+  border-radius: var(--radius-pill);
+  padding: 10px 24px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.btn-primary-sm:hover { background: var(--brand-dark-hover); }
+
+.btn-outline {
+  background: transparent;
+  color: var(--brand-dark-variant);
+  border: 1px solid var(--outline-border);
+  border-radius: var(--radius-pill);
+  padding: 10px 24px;
+  font-size: 16px;
+  font-weight: 400;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.btn-outline:hover { border-color: var(--brand-dark-variant); }
+
+.btn-white {
+  background: var(--pure-white);
+  color: var(--brand-dark);
+  border: none;
+  border-radius: var(--radius-pill);
+  padding: 14px 32px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.btn-white:hover { background: rgba(255,255,255,0.85); }
+
+.btn-contact {
+  background: linear-gradient(277deg, rgb(255,210,0), rgb(255,238,0));
+  color: var(--brand-dark);
+  border: none;
+  border-radius: 51px;
+  padding: 10px 24px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.btn-link-secondary {
+  color: var(--secondary-text);
+  text-decoration: none;
+  font-size: 14px;
+  transition: color 0.3s;
+}
+
+.btn-link-secondary:hover { color: var(--brand-dark); }
+
+.buy-link {
+  color: var(--brand-dark);
+  text-decoration: none;
+  border-radius: 100px;
+  padding: 8px 20px;
+  transition: background 0.2s cubic-bezier(0.445, 0.05, 0.55, 0.95);
+  font-weight: 500;
+}
+
+.buy-link:hover {
+  background: var(--brand-dark);
+  color: white;
+}
+
+/* Sections */
+.section { padding: 80px 0; }
+
+.section-title {
+  font-family: var(--font-new);
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.section-subtitle {
+  font-size: 16px;
+  color: var(--secondary-text);
+  margin-bottom: 40px;
+}
+
+/* Color Swatches */
+.color-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 16px;
+}
+
+.color-card {
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.color-card.light-border { border-color: var(--outline-border); }
+
+.color-swatch { height: 80px; }
+
+.color-info { padding: 12px; }
+
+.color-info .name { font-size: 13px; font-weight: 600; }
+
+.color-info .value { font-size: 12px; opacity: 0.6; font-family: monospace; margin-top: 2px; }
+
+/* Product Card */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 20px;
+}
+
+.product-card {
+  background: var(--light-bg);
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.product-card:hover { transform: scale(1.02); }
+
+.product-card .img-placeholder {
+  height: 200px;
+  background: linear-gradient(135deg, #2a2a3e 0%, #1a1a2e 100%);
+  overflow: hidden;
+}
+
+.product-card .img-placeholder .inner {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #3a3a5e 0%, #2a2a4e 100%);
+  transition: transform 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48px;
+}
+
+.product-card:hover .img-placeholder .inner { transform: scale(1.1); }
+
+.product-card .card-body { padding: 20px; }
+
+.product-card .card-body h3 {
+  font-family: var(--font-new);
+  font-size: 16px;
+  font-weight: 630;
+  margin-bottom: 8px;
+}
+
+.product-card .card-body .price {
+  font-size: 14px;
+  color: var(--secondary-text);
+  margin-bottom: 16px;
+}
+
+.product-card .card-body .actions {
+  display: flex;
+  gap: 16px;
+}
+
+/* Campaign Card */
+.campaign-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.campaign-card {
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  cursor: pointer;
+  position: relative;
+  height: 240px;
+  background: linear-gradient(135deg, #1e3a5f 0%, #0a1628 100%);
+}
+
+.campaign-card .cover {
+  transition: transform 0.3s;
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #2a4a6f 0%, #1a2a48 100%);
+}
+
+.campaign-card:hover .cover { transform: scale(1.05); }
+
+.campaign-card .card-label {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  z-index: 1;
+  font-family: var(--font-new);
+  font-size: 18px;
+  font-weight: 630;
+}
+
+/* Entry Cards */
+.entry-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.entry-card {
+  background: var(--light-bg);
+  border-radius: var(--radius-entry);
+  padding: 24px;
+  cursor: pointer;
+  transition: all 0.3s;
+  text-align: center;
+}
+
+.entry-card:hover { background: var(--silver); }
+
+.entry-card .icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: var(--brand-dark);
+  margin: 0 auto 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 20px;
+}
+
+.entry-card .text {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* Typography Section */
+.type-sample { padding: 16px 0; border-bottom: 1px solid rgba(255,255,255,0.1); }
+.type-label { font-size: 12px; color: var(--secondary-text); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+
+/* Token Table */
+.token-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.token-table th { text-align: left; padding: 8px 12px; border-bottom: 1px solid rgba(255,255,255,0.15); font-weight: 600; }
+.token-table td { padding: 6px 12px; border-bottom: 1px solid rgba(255,255,255,0.06); }
+.token-table td:first-child { font-family: monospace; font-weight: 500; }
+
+/* Transition Demo */
+.transition-demo { display: flex; gap: 24px; flex-wrap: wrap; }
+.transition-box {
+  width: 100px; height: 100px; border-radius: 50px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; color: var(--pure-white); background: var(--brand-dark);
+  cursor: pointer;
+}
+.transition-box.t-02 { transition: background 0.2s; }
+.transition-box.t-03 { transition: background 0.3s; }
+.transition-box.t-bezier { transition: background 0.2s cubic-bezier(0.445, 0.05, 0.55, 0.95); }
+.transition-box:hover { background: var(--brand-dark-hover); }
+
+/* Gradient Demo */
+.gradient-strip {
+  height: 60px;
+  border-radius: 12px;
+  margin-bottom: 12px;
+}
+
+/* Footer */
+footer {
+  background: var(--deep-dark);
+  padding: 40px;
+  text-align: center;
+}
+
+footer a {
+  color: rgba(255,255,255,0.5);
+  text-decoration: none;
+  font-size: 14px;
+  margin: 0 12px;
+  transition: color 0.3s;
+}
+
+footer a:hover { color: var(--pure-white); }
+
+/* Divider */
+.divider { border: none; border-top: 1px solid rgba(255,255,255,0.08); margin: 0; }
+.divider-light { border: none; border-top: 1px solid var(--outline-border); margin: 0; }
+
+/* Validation Card */
+.validation-card {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 16px;
+  padding: 32px;
+  margin-bottom: 32px;
+}
+.validation-card-light {
+  background: var(--pure-white);
+  border: 1px solid var(--outline-border);
+  border-radius: 16px;
+  padding: 32px;
+  margin-bottom: 32px;
+}
+
+/* Floating Chat Button */
+.chat-float {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 999;
+}
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<header>
+  <div class="logo">Insta360 Design</div>
+  <div style="display:flex;gap:16px;align-items:center;">
+    <a href="#" style="color:rgba(255,255,255,0.7);text-decoration:none;font-size:14px;transition:color 0.3s;">Products</a>
+    <a href="#" style="color:rgba(255,255,255,0.7);text-decoration:none;font-size:14px;transition:color 0.3s;">Store</a>
+    <button class="btn-primary-sm">Buy Now</button>
+  </div>
+</header>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-content">
+    <h1 class="font-title">Insta360<br>Design Style</h1>
+    <p>Validation page for extracted design system from insta360.com</p>
+    <div class="btn-row">
+      <button class="btn-primary">Buy Now</button>
+      <button class="btn-white" style="background:transparent;border:1px solid rgba(255,255,255,0.3);color:white;">Learn More</button>
+    </div>
+  </div>
+</section>
+
+<!-- Color System (Dark Section) -->
+<section class="section section-dark">
+  <div class="container">
+    <h2 class="section-title">Color System</h2>
+    <p class="section-subtitle">Brand Colors & Backgrounds</p>
+
+    <div class="color-grid" style="margin-bottom:40px;">
+      <div class="color-card">
+        <div class="color-swatch" style="background:rgb(38,38,41);"></div>
+        <div class="color-info"><div class="name">Brand Dark</div><div class="value">#262629</div></div>
+      </div>
+      <div class="color-card">
+        <div class="color-swatch" style="background:rgb(81,81,87);"></div>
+        <div class="color-info"><div class="name">Hover Dark</div><div class="value">#515157</div></div>
+      </div>
+      <div class="color-card">
+        <div class="color-swatch" style="background:#000000;"></div>
+        <div class="color-info"><div class="name">Pure Black</div><div class="value">#000000</div></div>
+      </div>
+      <div class="color-card">
+        <div class="color-swatch" style="background:#FFFFFF;"></div>
+        <div class="color-info"><div class="name">Pure White</div><div class="value">#FFFFFF</div></div>
+      </div>
+      <div class="color-card">
+        <div class="color-swatch" style="background:#F8F9FC;"></div>
+        <div class="color-info"><div class="name">Light BG</div><div class="value">#F8F9FC</div></div>
+      </div>
+      <div class="color-card">
+        <div class="color-swatch" style="background:#EDEFF2;"></div>
+        <div class="color-info"><div class="name">Silver</div><div class="value">#EDEFF2</div></div>
+      </div>
+    </div>
+
+    <h3 style="font-size:20px;margin-bottom:16px;">Text Colors</h3>
+    <div class="color-grid" style="margin-bottom:40px;">
+      <div class="color-card">
+        <div class="color-swatch" style="background:#000000;"></div>
+        <div class="color-info"><div class="name">Primary Text</div><div class="value">#000000</div></div>
+      </div>
+      <div class="color-card">
+        <div class="color-swatch" style="background:rgb(38,38,41);"></div>
+        <div class="color-info"><div class="name">Dark Text</div><div class="value">#262629</div></div>
+      </div>
+      <div class="color-card">
+        <div class="color-swatch" style="background:#76767F;"></div>
+        <div class="color-info"><div class="name">Secondary</div><div class="value">#76767F</div></div>
+      </div>
+      <div class="color-card">
+        <div class="color-swatch" style="background:#A1A1AA;"></div>
+        <div class="color-info"><div class="name">Placeholder</div><div class="value">#A1A1AA</div></div>
+      </div>
+    </div>
+
+    <h3 style="font-size:20px;margin-bottom:16px;">Accent Colors</h3>
+    <div class="color-grid" style="margin-bottom:40px;">
+      <div class="color-card">
+        <div class="color-swatch" style="background:#F75A4D;"></div>
+        <div class="color-info"><div class="name">Red Accent</div><div class="value">#F75A4D</div></div>
+      </div>
+      <div class="color-card">
+        <div class="color-swatch" style="background:#0EA5E9;"></div>
+        <div class="color-info"><div class="name">Sky Blue</div><div class="value">#0EA5E9</div></div>
+      </div>
+      <div class="color-card">
+        <div class="color-swatch" style="background:linear-gradient(277deg,#FFD200,#FFEE00);"></div>
+        <div class="color-info"><div class="name">Chat Gold</div><div class="value">gradient</div></div>
+      </div>
+    </div>
+
+    <h3 style="font-size:20px;margin-bottom:16px;">Gradient Overlays</h3>
+    <div class="gradient-strip" style="background:linear-gradient(to right, transparent 0%, rgba(0,0,0,0.4) 100%);"></div>
+    <p style="font-size:12px;color:var(--secondary-text);margin-bottom:8px;">15-step bottom mask: transparent -> rgba(0,0,0,0.4)</p>
+    <div class="gradient-strip" style="background:linear-gradient(to right, rgba(0,0,0,0.5) 0%, transparent 100%);"></div>
+    <p style="font-size:12px;color:var(--secondary-text);">Top mask: rgba(0,0,0,0.5) -> transparent</p>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- Typography (Light Section) -->
+<section class="section section-light">
+  <div class="container">
+    <h2 class="section-title" style="color:var(--brand-dark);">Typography</h2>
+
+    <div class="validation-card-light">
+      <div class="type-sample">
+        <div class="type-label" style="color:var(--secondary-text);">H1 / Poppins / 32px / Weight 700</div>
+        <div class="font-title" style="font-size:32px;font-weight:700;color:#000;">影石 Insta360 官網</div>
+      </div>
+      <div class="type-sample">
+        <div class="type-label" style="color:var(--secondary-text);">Category Label / Poppins / 14px / Weight 700 / Line-height 18px</div>
+        <div class="font-title" style="font-size:14px;font-weight:700;line-height:18px;color:var(--tertiary-text);">影石Insta360 GO Ultra<br>塔代伊·波加查限定款</div>
+      </div>
+      <div class="type-sample">
+        <div class="type-label" style="color:var(--secondary-text);">CTA Large / Roboto / 16px / Weight 500</div>
+        <div style="font-size:16px;font-weight:500;color:var(--brand-dark);">立即购买 Buy Now</div>
+      </div>
+      <div class="type-sample">
+        <div class="type-label" style="color:var(--secondary-text);">CTA Small / Roboto / 14px / Weight 500-600</div>
+        <div style="font-size:14px;font-weight:500;color:var(--brand-dark);">了解 more</div>
+      </div>
+      <div class="type-sample">
+        <div class="type-label" style="color:var(--secondary-text);">Body / Roboto / 16px / Weight 400</div>
+        <div style="font-size:16px;font-weight:400;color:var(--brand-dark);">Insta360 consumer electronics design language features a dark, cinematic aesthetic with bold imagery.</div>
+      </div>
+      <div class="type-sample">
+        <div class="type-label" style="color:var(--secondary-text);">Contact / 12px / Weight 700</div>
+        <div style="font-size:12px;font-weight:700;color:var(--brand-dark);">开始咨询 Contact Us</div>
+      </div>
+    </div>
+
+    <h3 style="font-size:20px;margin-bottom:16px;color:var(--brand-dark);">Variable Font Weights</h3>
+    <table class="token-table" style="color:var(--brand-dark);">
+      <tr><th>Name</th><th>Value</th><th>Demo</th></tr>
+      <tr><td>Regular</td><td>330</td><td style="font-weight:330;">Light body text</td></tr>
+      <tr><td>Medium</td><td>380</td><td style="font-weight:380;">Slight emphasis</td></tr>
+      <tr><td>Semibold</td><td>520</td><td style="font-weight:520;">Subheadings</td></tr>
+      <tr><td>Bold</td><td>630</td><td style="font-weight:630;">Headings</td></tr>
+      <tr><td>Extrabold/Black</td><td>700</td><td style="font-weight:700;">Hero text</td></tr>
+    </table>
+  </div>
+</section>
+
+<hr class="divider-light">
+
+<!-- Buttons -->
+<section class="section section-gray">
+  <div class="container">
+    <h2 class="section-title" style="color:var(--brand-dark);">Component Styles - Buttons</h2>
+
+    <div class="validation-card-light">
+      <h3 style="font-size:16px;color:var(--secondary-text);margin-bottom:16px;">Primary CTA (Pill)</h3>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:32px;">
+        <button class="btn-primary-sm" style="background:var(--brand-dark);color:white;border-radius:50px;">立即购买</button>
+        <button class="btn-primary-sm" style="background:var(--brand-dark);color:white;border-radius:50px;">了解更多</button>
+        <button class="btn-primary-sm" style="background:var(--brand-dark);color:white;border-radius:50px;">产品对比</button>
+      </div>
+
+      <h3 style="font-size:16px;color:var(--secondary-text);margin-bottom:16px;">Large CTA</h3>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:32px;">
+        <button class="btn-primary">立即购买</button>
+        <button class="btn-primary">了解更多</button>
+      </div>
+
+      <h3 style="font-size:16px;color:var(--secondary-text);margin-bottom:16px;">Outline Button</h3>
+      <div style="margin-bottom:32px;">
+        <button class="btn-outline">查看全部</button>
+      </div>
+
+      <h3 style="font-size:16px;color:var(--secondary-text);margin-bottom:16px;">Link Buttons</h3>
+      <div style="display:flex;gap:24px;flex-wrap:wrap;margin-bottom:32px;">
+        <a href="#" class="buy-link">立即购买</a>
+        <a href="#" class="btn-link-secondary">了解更多 →</a>
+      </div>
+
+      <h3 style="font-size:16px;color:var(--secondary-text);margin-bottom:16px;">Contact / Chat Button</h3>
+      <button class="btn-contact">开始咨询</button>
+    </div>
+  </div>
+</section>
+
+<hr class="divider-light">
+
+<!-- Product Cards -->
+<section class="section section-gray">
+  <div class="container">
+    <h2 class="section-title" style="color:var(--brand-dark);">Component Styles - Product Cards</h2>
+    <p class="section-subtitle" style="color:var(--secondary-text);">Hover on cards to see 1.1x image zoom effect</p>
+
+    <div class="product-grid">
+      <div class="product-card">
+        <div class="img-placeholder"><div class="inner">📷</div></div>
+        <div class="card-body">
+          <h3>Insta360 X4</h3>
+          <div class="price">From ¥3,998</div>
+          <div class="actions">
+            <a href="#" class="buy-link" style="font-size:14px;">立即购买</a>
+            <a href="#" class="btn-link-secondary">了解更多</a>
+          </div>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="img-placeholder"><div class="inner" style="background:linear-gradient(135deg,#2a3a5e 0%,#1a2a4e 100%);">🎥</div></div>
+        <div class="card-body">
+          <h3>Insta360 Ace Pro 2</h3>
+          <div class="price">From ¥3,498</div>
+          <div class="actions">
+            <a href="#" class="buy-link" style="font-size:14px;">立即购买</a>
+            <a href="#" class="btn-link-secondary">了解更多</a>
+          </div>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="img-placeholder"><div class="inner" style="background:linear-gradient(135deg,#3a2a4e 0%,#2a1a3e 100%);">🎬</div></div>
+        <div class="card-body">
+          <h3>Insta360 GO Ultra</h3>
+          <div class="price">From ¥2,398</div>
+          <div class="actions">
+            <a href="#" class="buy-link" style="font-size:14px;">立即购买</a>
+            <a href="#" class="btn-link-secondary">了解更多</a>
+          </div>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="img-placeholder"><div class="inner" style="background:linear-gradient(135deg,#2a4e3a 0%,#1a3e2a 100%);">📱</div></div>
+        <div class="card-body">
+          <h3>Insta360 Flow 2</h3>
+          <div class="price">From ¥899</div>
+          <div class="actions">
+            <a href="#" class="buy-link" style="font-size:14px;">立即购买</a>
+            <a href="#" class="btn-link-secondary">了解更多</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- Campaign Cards (Dark) -->
+<section class="section section-dark">
+  <div class="container">
+    <h2 class="section-title">Campaign Cards</h2>
+    <p class="section-subtitle">Hover for 1.05x zoom; gradient overlay pattern</p>
+
+    <div class="campaign-grid">
+      <div class="campaign-card">
+        <div class="cover" style="background:linear-gradient(135deg,#1a3a5f 0%,#0a1628 100%);"></div>
+        <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.5),transparent);z-index:0;"></div>
+        <div class="card-label">Adventure Collection</div>
+      </div>
+      <div class="campaign-card">
+        <div class="cover" style="background:linear-gradient(135deg,#3a1a5f 0%,#1a0a28 100%);"></div>
+        <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.5),transparent);z-index:0;"></div>
+        <div class="card-label">Creator Spotlight</div>
+      </div>
+      <div class="campaign-card">
+        <div class="cover" style="background:linear-gradient(135deg,#1a5f3a 0%,#0a281a 100%);"></div>
+        <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.5),transparent);z-index:0;"></div>
+        <div class="card-label">Enterprise Solutions</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Support Entries -->
+<section class="section section-light">
+  <div class="container">
+    <h2 class="section-title" style="color:var(--brand-dark);">Support Entry Cards</h2>
+
+    <div class="entry-grid">
+      <div class="entry-card">
+        <div class="icon">🎧</div>
+        <div class="text" style="color:var(--brand-dark);border-bottom:2px solid transparent;transition:border-color 0.3s;">产品专家帮您选购</div>
+      </div>
+      <div class="entry-card">
+        <div class="icon">📖</div>
+        <div class="text">使用帮助</div>
+      </div>
+      <div class="entry-card">
+        <div class="icon">💾</div>
+        <div class="text">下载</div>
+      </div>
+      <div class="entry-card">
+        <div class="icon">🔧</div>
+        <div class="text">售后服务</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- Transitions -->
+<section class="section section-dark">
+  <div class="container">
+    <h2 class="section-title">Effects & Interactions</h2>
+    <p class="section-subtitle">Hover to test transition speeds</p>
+
+    <div class="validation-card">
+      <div class="transition-demo">
+        <div class="transition-box t-02">0.2s</div>
+        <div class="transition-box t-03">0.3s</div>
+        <div class="transition-box t-bezier">bezier</div>
+      </div>
+    </div>
+
+    <div class="validation-card">
+      <h3 style="font-size:18px;margin-bottom:16px;">Transition Reference</h3>
+      <table class="token-table">
+        <tr><th>Context</th><th>Duration</th><th>Easing</th></tr>
+        <tr><td>Button background</td><td>0.3s</td><td>ease</td></tr>
+        <tr><td>Buy link background</td><td>0.2s</td><td>cubic-bezier(0.445, 0.05, 0.55, 0.95)</td></tr>
+        <tr><td>Link background</td><td>0.2s</td><td>ease</td></tr>
+        <tr><td>Border color</td><td>0.2s</td><td>ease</td></tr>
+        <tr><td>Image zoom</td><td>0.3s</td><td>ease</td></tr>
+        <tr><td>Opacity fade</td><td>0.5s / 0.3s</td><td>ease</td></tr>
+        <tr><td>Arrow reveal</td><td>0.5s</td><td>ease</td></tr>
+      </table>
+    </div>
+
+    <div class="validation-card">
+      <h3 style="font-size:18px;margin-bottom:16px;">Hover Effects Summary</h3>
+      <table class="token-table">
+        <tr><th>Element</th><th>Hover Change</th></tr>
+        <tr><td>Primary buttons</td><td>rgb(38,38,41) → rgb(81,81,87)</td></tr>
+        <tr><td>Outline button border</td><td>rgb(228,228,231) → rgb(39,39,42)</td></tr>
+        <tr><td>Link color</td><td>#76767F → #262629</td></tr>
+        <tr><td>Product image</td><td>scale(1) → scale(1.1)</td></tr>
+        <tr><td>Campaign image</td><td>scale(1) → scale(1.05)</td></tr>
+        <tr><td>Carousel arrow icon</td><td>scale(1) → scale(1.3)</td></tr>
+        <tr><td>Arrow bg</td><td>rgba(38,38,41,0.4) → rgba(38,38,41,0.3)</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- CSS Variables Quick Ref -->
+<section class="section section-light">
+  <div class="container">
+    <h2 class="section-title" style="color:var(--brand-dark);">CSS Variables Quick Reference</h2>
+
+    <div class="validation-card-light">
+      <table class="token-table" style="color:var(--brand-dark);">
+        <tr><th>Variable</th><th>Value</th></tr>
+        <tr><td>--brand-dark</td><td>rgb(38, 38, 41)</td></tr>
+        <tr><td>--brand-dark-hover</td><td>rgb(81, 81, 87)</td></tr>
+        <tr><td>--header-nav-height</td><td>64px</td></tr>
+        <tr><td>--title-font-family</td><td>"Poppins Old", "Noto Sans SC", Roboto</td></tr>
+        <tr><td>--content-font-family</td><td>Roboto, "Noto Sans SC", "Poppins Old"</td></tr>
+        <tr><td>--new-font-family</td><td>"Poppins", "MiSans VF"</td></tr>
+        <tr><td>--regular</td><td>330</td></tr>
+        <tr><td>--medium</td><td>380</td></tr>
+        <tr><td>--semibold</td><td>520</td></tr>
+        <tr><td>--bold</td><td>630</td></tr>
+        <tr><td>--extrabold</td><td>700</td></tr>
+        <tr><td>Pill border-radius</td><td>50px</td></tr>
+        <tr><td>Card border-radius</td><td>24px</td></tr>
+        <tr><td>Entry border-radius</td><td>16px</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <a href="#">Products</a>
+  <a href="#">Store</a>
+  <a href="#">Community</a>
+  <a href="#">Support</a>
+  <a href="#">Enterprise</a>
+</footer>
+
+<!-- Floating Chat Button -->
+<div class="chat-float">
+  <button class="btn-contact" style="font-size:14px;padding:12px 24px;">开始咨询</button>
+</div>
+
+</body>
+</html>
