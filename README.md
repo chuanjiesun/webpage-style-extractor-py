@@ -41,7 +41,7 @@ webpage-style-extractor-py/
 2、trae 
 在项目目录下的.trae/skills/
 
-在对话框输入`/webpage-style-extractor-py 请提取https://www.example.com/的页面信息，输出到/output/目录下`，等待执行完成就可以查看指定页面的风格SKILL。
+在对话框输入`使用技能webpage-style-extractor-py 请提取https://www.example.com/的页面信息，输出到/output/目录下`，等待执行完成就可以查看指定页面的风格SKILL。
 
 ## skill获取页面效果示例
 请查看`output_skills_examples`目录下效果
