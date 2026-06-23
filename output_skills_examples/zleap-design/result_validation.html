@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zleap 设计风格验证页面</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    background: #F5F5F5;
+    color: #0F1419;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* ===== 顶部导航 ===== */
+  .top-nav {
+    position: sticky; top: 0; z-index: 30;
+    width: 100%; border-bottom: 1px solid #F5F5F5;
+    background: #FFFFFF;
+    transition: transform 0.2s cubic-bezier(0, 0, 0.2, 1);
+  }
+  .top-nav-inner {
+    margin: 0 auto; display: flex; height: 72px; max-width: 1440px;
+    align-items: center; justify-content: space-between; padding: 0 32px;
+  }
+  .top-nav-logo { display: flex; align-items: center; gap: 8px; }
+  .top-nav-logo img { height: 32px; }
+  .top-nav-links { display: flex; align-items: center; gap: 36px; }
+  .top-nav-links a { color: #44403C; font-size: 16px; text-decoration: none; transition: color 0.15s; white-space: nowrap; }
+  .top-nav-links a:hover { color: #111827; }
+  .top-nav-cta {
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 9999px; background: #FF8A00; padding: 10px 24px;
+    color: #FFFFFF; font-size: 16px; line-height: 22px; text-decoration: none;
+    cursor: pointer; transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .top-nav-cta:hover { opacity: 0.9; }
+
+  /* ===== Hero ===== */
+  .hero {
+    background: #FFFFFF; border-bottom: 1px solid #F5F5F5;
+    padding: 80px 32px 64px; text-align: center;
+  }
+  .hero h1 { font-size: 48px; font-weight: 800; line-height: 1.2; color: #0F1419; margin-bottom: 16px; }
+  .hero p { font-size: 17px; line-height: 1.6; color: #525252; max-width: 696px; margin: 0 auto 32px; }
+  .hero .badge {
+    display: inline-block; padding: 6px 16px; border-radius: 32px;
+    background: #F4F4F5; color: #292524; font-size: 14px; font-weight: 500;
+  }
+
+  /* ===== 主容器 ===== */
+  .main-container { max-width: 1100px; margin: 0 auto; padding: 48px 32px; }
+
+  /* ===== 区块标题 ===== */
+  .section-title {
+    font-size: 24px; font-weight: 800; line-height: 1.3; color: #0F1419;
+    margin-bottom: 8px;
+  }
+  .section-desc { font-size: 15px; color: #525252; margin-bottom: 32px; }
+
+  /* ===== 色彩系统 ===== */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 16px; margin-bottom: 48px; }
+  .color-card { background: #FFFFFF; border: 1px solid rgb(239, 243, 244); border-radius: 12px; overflow: hidden; }
+  .color-swatch { height: 80px; }
+  .color-info { padding: 12px; }
+  .color-name { font-size: 14px; font-weight: 500; color: #171717; margin-bottom: 4px; }
+  .color-hex { font-size: 13px; color: #A1A1AA; font-family: ui-monospace, monospace; }
+
+  /* ===== 排版系统 ===== */
+  .typo-table { width: 100%; background: #FFFFFF; border-radius: 12px; border: 1px solid rgb(239, 243, 244); overflow: hidden; margin-bottom: 48px; }
+  .typo-table th { background: #F9FAFB; padding: 12px 16px; text-align: left; font-size: 14px; font-weight: 500; color: #171717; border-bottom: 1px solid rgb(239, 243, 244); }
+  .typo-table td { padding: 12px 16px; border-bottom: 1px solid #F5F5F5; font-size: 14px; color: #525252; }
+  .typo-preview { margin-bottom: 48px; }
+  .typo-row { margin-bottom: 32px; }
+  .typo-label { font-size: 13px; color: #A1A1AA; margin-bottom: 8px; }
+
+  /* ===== 组件展示 ===== */
+  .comp-section { margin-bottom: 48px; }
+  .comp-section h3 { font-size: 20px; font-weight: 800; color: #0F1419; margin-bottom: 20px; }
+  .comp-row { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; margin-bottom: 24px; }
+
+  /* 按钮展示 */
+  .btn-cta-demo {
+    display: inline-flex; align-items: center; justify-content: center;
+    border-radius: 9999px; background: #FF8A00; padding: 12px 24px;
+    color: #FFFFFF; font-size: 16px; font-weight: 500; text-decoration: none;
+    transition: opacity 0.15s; cursor: pointer;
+  }
+  .btn-cta-demo:hover { opacity: 0.9; }
+  .btn-follow-demo {
+    display: inline-flex; align-items: center; justify-content: center;
+    height: 36px; width: 82px; border-radius: 20.5px; border: 1px solid #FF8A00;
+    background: #FFFFFF; color: #FF8A00; font-size: 14px; font-weight: 500;
+    cursor: pointer; transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .btn-follow-demo:hover { background: #FF8A00; color: #FFFFFF; }
+  .btn-nav-demo {
+    display: inline-flex; align-items: center; gap: 8px; border-radius: 9999px;
+    padding: 13px 16px; font-size: 16px; color: #000; background: #F4F4F5;
+    cursor: pointer; transition: background-color 0.15s;
+  }
+  .btn-tab-demo {
+    display: inline-flex; width: 86px; align-items: center; justify-content: center;
+    gap: 10px; border-radius: 32px; padding: 9px 12px; font-size: 16px; text-align: center;
+    cursor: pointer; transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .btn-tab-active { background: #F4F4F5; color: #292524; font-weight: 500; }
+  .btn-tab-inactive { color: #44403C; }
+  .btn-tab-inactive:hover { background: #F4F4F5; color: #292524; }
+  .btn-action-demo {
+    display: inline-flex; align-items: center; gap: 4px; border-radius: 9999px;
+    padding: 8px 16px; font-size: 14px; color: #525252;
+    cursor: pointer; transition: background-color 0.15s;
+  }
+  .btn-action-like:hover { background: #FFF7ED; }
+  .btn-action-fav:hover { background: #FFFBEB; }
+  .btn-action-comment:hover { background: #EFF6FF; }
+  .btn-action-share:hover { background: #F0FDF4; }
+
+  /* 文章卡片展示 */
+  .article-card-demo {
+    background: #FFFFFF; border-radius: 4px; padding: 32px 20px;
+    border: 1px solid rgb(239, 243, 244);
+    transition: background-color 0.15s; cursor: pointer;
+    margin-bottom: 8px;
+  }
+  .article-card-demo:hover { background: #F9FAFB; }
+  .article-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
+  .article-user { display: flex; align-items: center; gap: 12px; }
+  .article-avatar {
+    position: relative; overflow: hidden; border-radius: 9999px;
+    border: 0.748px solid #F5F5F5; background: #FFFFFF;
+    box-shadow: 0 0 10.67px 5.33px rgba(255, 232, 163, 0.80);
+    width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;
+  }
+  .article-avatar-inner {
+    width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
+    border-radius: 9999px; background: linear-gradient(to bottom right, #92D8C2, #F6D365);
+    color: #FFFFFF; font-size: 15px; font-weight: 500;
+  }
+  .article-username { font-size: 16px; font-weight: 500; color: #171717; line-height: 22px; }
+  .article-time { font-size: 14px; color: #A1A1AA; line-height: 20px; margin-top: 6px; }
+  .article-content-card {
+    margin-top: 8px; border-radius: 12px; border: 1px solid rgb(239, 243, 244);
+    overflow: hidden;
+  }
+  .article-content-pic {
+    height: 80px; background: linear-gradient(135deg, #92D8C2 0%, #F6D365 100%);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .article-content-pic span { color: rgba(255,255,255,0.6); font-size: 13px; }
+  .article-content-text { padding: 12px; }
+  .article-content-title { font-size: 17px; font-weight: 800; color: #0F1419; line-height: 20px; }
+  .article-content-body { font-size: 15px; color: #0F1419; line-height: 20px; margin-top: 8px; }
+  .article-actions { display: flex; align-items: center; justify-content: flex-start; gap: 4px; margin-top: 12px; }
+
+  /* 侧栏展示 */
+  .sidebar-demo {
+    background: #FFFFFF; border-radius: 12px; border: 1px solid rgb(239, 243, 244);
+    padding: 20px 0; width: 232px;
+  }
+  .sidebar-demo ul { list-style: none; padding: 0 16px; }
+  .sidebar-demo li { margin-bottom: 12px; }
+
+  .demo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-bottom: 48px; }
+
+  /* 脚部 */
+  .footer { text-align: center; padding: 48px 32px; color: #A1A1AA; font-size: 14px; }
+
+  @media (max-width: 768px) {
+    .top-nav-inner { height: 64px; padding: 0 16px; }
+    .hero { padding: 60px 16px 48px; }
+    .hero h1 { font-size: 32px; }
+    .main-container { padding: 32px 16px; }
+    .demo-grid { grid-template-columns: 1fr; }
+    .comp-row { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<!-- 顶部导航 -->
+<nav class="top-nav">
+  <div class="top-nav-inner">
+    <div class="top-nav-logo">
+      <div style="width:32px;height:32px;border-radius:8px;background:linear-gradient(to bottom right,#92D8C2,#F6D365);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:18px;">Z</div>
+      <span style="font-weight:700;font-size:18px;color:#0F1419;">Zleap</span>
+      <span style="padding:2px 8px;border-radius:16px;background:#F4F4F5;font-size:12px;color:#292524;">Beta</span>
+    </div>
+    <div class="top-nav-links">
+      <a href="#">帮助中心</a>
+      <a href="#">企业版</a>
+    </div>
+    <a class="top-nav-cta" href="#">登录</a>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <h1>Zleap 设计风格验证</h1>
+  <p>下一代内容社区，人与Agent共同创作和交流。本页面展示了从 zleap.com 提取的完整设计系统。</p>
+  <span class="badge">科技 · 社交内容平台</span>
+</section>
+
+<!-- 主内容 -->
+<div class="main-container">
+
+  <!-- ===== 色彩系统 ===== -->
+  <h2 class="section-title">色彩系统</h2>
+  <p class="section-desc">所有颜色值均从页面实际 CSS 和计算样式中提取</p>
+
+  <div class="color-grid">
+    <div class="color-card">
+      <div class="color-swatch" style="background:#FF8A00;"></div>
+      <div class="color-info"><div class="color-name">品牌主色</div><div class="color-hex">#FF8A00</div></div>
+    </div>
+    <div class="color-card">
+      <div class="color-swatch" style="background:#F5F5F5;"></div>
+      <div class="color-info"><div class="color-name">页面底色</div><div class="color-hex">#F5F5F5</div></div>
+    </div>
+    <div class="color-card">
+      <div class="color-swatch" style="background:#FFFFFF;"></div>
+      <div class="color-info"><div class="color-name">卡片/导航背景</div><div class="color-hex">#FFFFFF</div></div>
+    </div>
+    <div class="color-card">
+      <div class="color-swatch" style="background:#0F1419;"></div>
+      <div class="color-info"><div class="color-name">正文/标题色</div><div class="color-hex">#0F1419</div></div>
+    </div>
+    <div class="color-card">
+      <div class="color-swatch" style="background:#171717;"></div>
+      <div class="color-info"><div class="color-name">用户名文字</div><div class="color-hex">#171717</div></div>
+    </div>
+    <div class="color-card">
+      <div class="color-swatch" style="background:#525252;"></div>
+      <div class="color-info"><div class="color-name">操作文本</div><div class="color-hex">#525252</div></div>
+    </div>
+    <div class="color-card">
+      <div class="color-swatch" style="background:#A1A1AA;"></div>
+      <div class="color-info"><div class="color-name">弱化/时间戳</div><div class="color-hex">#A1A1AA</div></div>
+    </div>
+    <div class="color-card">
+      <div class="color-swatch" style="background:#44403C;"></div>
+      <div class="color-info"><div class="color-name">导航链接</div><div class="color-hex">#44403C</div></div>
+    </div>
+    <div class="color-card">
+      <div class="color-swatch" style="background:#F4F4F5;"></div>
+      <div class="color-info"><div class="color-name">导航激活态</div><div class="color-hex">#F4F4F5</div></div>
+    </div>
+    <div class="color-card">
+      <div class="color-swatch" style="background:#F9FAFB;"></div>
+      <div class="color-info"><div class="color-name">卡片悬停</div><div class="color-hex">#F9FAFB</div></div>
+    </div>
+    <div class="color-card">
+      <div class="color-swatch" style="background:#292524;"></div>
+      <div class="color-info"><div class="color-name">激活文本</div><div class="color-hex">#292524</div></div>
+    </div>
+    <div class="color-card">
+      <div class="color-swatch" style="background:linear-gradient(to bottom right,#92D8C2,#F6D365);"></div>
+      <div class="color-info"><div class="color-name">头像渐变</div><div class="color-hex">#92D8C2 → #F6D365</div></div>
+    </div>
+  </div>
+
+  <!-- ===== 排版系统 ===== -->
+  <h2 class="section-title">排版系统</h2>
+  <p class="section-desc">字体：ui-sans-serif（系统默认无衬线字体栈）</p>
+
+  <div class="typo-preview">
+    <div class="typo-row">
+      <div class="typo-label">文章标题 / 17px / 800 / line-height: 20px / #0F1419</div>
+      <div style="font-size:17px;font-weight:800;line-height:20px;color:#0F1419;">4-2-3-1对撞：法国1-0伊拉克的战术细节与隐患</div>
+    </div>
+    <div class="typo-row">
+      <div class="typo-label">文章正文 / 15px / 400 / line-height: 20px / #0F1419</div>
+      <div style="font-size:15px;font-weight:400;line-height:20px;color:#0F1419;">2026世界杯I组次轮法国对阵伊拉克，双方均采用4-2-3-1阵型出战。姆巴佩第14分钟内切远射打入全场唯一进球。</div>
+    </div>
+    <div class="typo-row">
+      <div class="typo-label">用户名 / 16px / 500 / line-height: 22px / #171717</div>
+      <div style="font-size:16px;font-weight:500;line-height:22px;color:#171717;">阿沅</div>
+    </div>
+    <div class="typo-row">
+      <div class="typo-label">时间戳 / 14px / 400 / line-height: 20px / #A1A1AA</div>
+      <div style="font-size:14px;font-weight:400;line-height:20px;color:#A1A1AA;">2分钟前</div>
+    </div>
+    <div class="typo-row">
+      <div class="typo-label">区块标题 (H3) / 16px / 500 / line-height: 24px / rgb(41,37,36)</div>
+      <div style="font-size:16px;font-weight:500;line-height:24px;color:rgb(41,37,36);">内容分类</div>
+    </div>
+    <div class="typo-row">
+      <div class="typo-label">操作按钮 / 14px / 400 / #525252</div>
+      <div style="font-size:14px;font-weight:400;color:#525252;">点赞 · 收藏 · 2 · 分享</div>
+    </div>
+  </div>
+
+  <!-- ===== 组件样式 ===== -->
+  <h2 class="section-title">组件样式展示</h2>
+  <p class="section-desc">按钮、卡片、头像等核心组件</p>
+
+  <!-- 按钮 -->
+  <div class="comp-section">
+    <h3>按钮</h3>
+    <div class="comp-row">
+      <span class="btn-cta-demo">登录</span>
+      <span class="btn-follow-demo">关注</span>
+      <span class="btn-nav-demo">🏠 首页</span>
+    </div>
+    <div class="comp-row">
+      <span class="btn-tab-demo btn-tab-active">发现</span>
+      <span class="btn-tab-demo btn-tab-inactive">关注</span>
+    </div>
+    <div class="comp-row">
+      <span class="btn-action-demo btn-action-like">👍 点赞</span>
+      <span class="btn-action-demo btn-action-fav">⭐ 收藏</span>
+      <span class="btn-action-demo btn-action-comment">💬 3</span>
+      <span class="btn-action-demo btn-action-share">↗ 分享</span>
+    </div>
+  </div>
+
+  <!-- 文章卡片 -->
+  <div class="comp-section">
+    <h3>文章卡片</h3>
+    <div class="article-card-demo">
+      <div class="article-header">
+        <div class="article-user">
+          <div class="article-avatar">
+            <div class="article-avatar-inner">阿</div>
+          </div>
+          <div>
+            <div class="article-username">阿沅</div>
+            <div class="article-time">2分钟前</div>
+          </div>
+        </div>
+        <span class="btn-follow-demo">关注</span>
+      </div>
+      <div class="article-content-card">
+        <div class="article-content-pic"><span>[ 5:2 媒体预览 ]</span></div>
+        <div class="article-content-text">
+          <div class="article-content-title">4-2-3-1对撞：法国1-0伊拉克的战术细节与隐患</div>
+          <div class="article-content-body">2026世界杯I组次轮法国对阵伊拉克，双方均采用4-2-3-1阵型出战。姆巴佩第14分钟内切远射打入全场唯一进球。</div>
+        </div>
+      </div>
+      <div class="article-actions">
+        <span class="btn-action-demo btn-action-like">👍 点赞</span>
+        <span class="btn-action-demo btn-action-fav">⭐ 收藏</span>
+        <span class="btn-action-demo btn-action-comment">💬 2</span>
+        <span class="btn-action-demo btn-action-share">↗ 分享</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 侧栏导航 -->
+  <div class="demo-grid">
+    <div class="comp-section" style="margin-bottom:0;">
+      <h3>侧栏导航</h3>
+      <div class="sidebar-demo">
+        <ul>
+          <li><span class="btn-nav-demo">🏠 首页</span></li>
+          <li><span style="display:inline-flex;align-items:center;gap:8px;border-radius:9999px;padding:13px 16px;font-size:16px;color:#000;transition:background-color 0.15s;cursor:pointer;">📡 信息源</span></li>
+          <li><span style="display:inline-flex;align-items:center;gap:8px;border-radius:9999px;padding:13px 16px;font-size:16px;color:#000;transition:background-color 0.15s;cursor:pointer;">💬 消息</span></li>
+        </ul>
+        <div style="padding:12px 16px 0;">
+          <span class="btn-cta-demo">登录</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 布局信息 -->
+    <div class="comp-section" style="margin-bottom:0;">
+      <h3>布局间距</h3>
+      <table class="typo-table" style="margin-bottom:0;">
+        <tr><th>属性</th><th>值</th></tr>
+        <tr><td>全局最大宽度</td><td>1440px</td></tr>
+        <tr><td>内容区最大宽度</td><td>696px</td></tr>
+        <tr><td>侧栏宽度</td><td>232px</td></tr>
+        <tr><td>头部高度(桌面)</td><td>72px</td></tr>
+        <tr><td>头部高度(移动)</td><td>64px</td></tr>
+        <tr><td>导航链接间距</td><td>36px</td></tr>
+        <tr><td>容器水平内边距</td><td>32px</td></tr>
+        <tr><td>移动端内边距</td><td>16px</td></tr>
+        <tr><td>文章区块间距</td><td>32px</td></tr>
+        <tr><td>卡片内容内边距</td><td>12px</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- 过渡动画 -->
+  <div class="comp-section" style="margin-top:48px;">
+    <h3>过渡与动画</h3>
+    <table class="typo-table" style="margin-bottom:12px;">
+      <tr><th>元素</th><th>过渡属性</th><th>时长</th><th>缓动函数</th></tr>
+      <tr><td>按钮/链接</td><td>color, background-color</td><td>150ms</td><td>cubic-bezier(0.4, 0, 0.2, 1)</td></tr>
+      <tr><td>头部导航</td><td>transform</td><td>200ms</td><td>cubic-bezier(0, 0, 0.2, 1)</td></tr>
+      <tr><td>图片占位 (pulse)</td><td>opacity</td><td>2000ms</td><td>cubic-bezier(0.4, 0, 0.6, 1) infinite</td></tr>
+    </table>
+    <p style="font-size:14px;color:#A1A1AA;">悬停效果示例：鼠标悬停下方卡片查看背景色变化</p>
+    <div class="article-card-demo" style="margin-top:16px;">
+      <div class="article-header">
+        <div class="article-user">
+          <div class="article-avatar"><div class="article-avatar-inner">Z</div></div>
+          <div><div class="article-username">悬停示例</div><div class="article-time">刚刚</div></div>
+        </div>
+      </div>
+      <div style="font-size:17px;font-weight:800;color:#0F1419;margin-top:8px;">悬停此卡片 → 背景变为 #F9FAFB</div>
+      <div style="font-size:15px;color:#0F1419;margin-top:4px;">这是模拟页面文章卡片的悬停交互效果。</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  Zleap Design Style Guide · 提取自 <a href="https://zleap.com/" style="color:#FF8A00;">zleap.com</a> · 2026-06-23
+</div>
+
+</body>
+</html>
